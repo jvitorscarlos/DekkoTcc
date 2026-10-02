@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dekko - Meu Portfólio</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=17">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        De<span>kko</span>
+    </div>
+
+    <div class="menu">
+
+        <button
+            class="btn-entrar"
+            type="button"
+            onclick="window.location.href='criar-perfil-pro.html'"
+        >
+            ← Voltar
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="pagina-portfolio">
+
+    <!-- ETAPAS -->
+
+    <div
+        class="pf-etapas"
+        aria-label="Etapas do cadastro do perfil"
+    >
+
+        <div class="pf-etapa feita">
+            <span>✓</span>
+            Perfil
+        </div>
+
+        <div class="pf-linha feita"></div>
+
+        <div class="pf-etapa atual">
+            <span>2</span>
+            Portfólio
+        </div>
+
+        <div class="pf-linha"></div>
+
+        <div class="pf-etapa">
+            <span>3</span>
+            Pronto
+        </div>
+
+    </div>
+
+
+    <div class="titulo-pagina">
+
+        <div class="tag">
+            📸 DEKKO • PORTFÓLIO
+        </div>
+
+        <h1>
+            Mostre seu <span>trabalho.</span>
+        </h1>
+
+        <p>
+            Adicione fotos dos seus serviços para os clientes
+            conhecerem melhor o seu trabalho. Elas aparecem no
+            seu perfil profissional.
+        </p>
+
+    </div>
+
+
+    <form
+        class="formulario-portfolio"
+        id="formPortfolio"
+    >
+
+        <div class="pf-topo">
+
+            <h2>
+                Suas fotos
+            </h2>
+
+            <p>
+                Clique em um quadrado para escolher uma foto.
+                Adicione <strong>pelo menos 3</strong> (até 6).
+            </p>
+
+        </div>
+
+
+        <!-- PROGRESSO -->
+
+        <div
+            class="pf-progresso"
+            aria-live="polite"
+        >
+
+            <div class="pf-progresso-topo">
+
+                <div
+                    class="pf-contagem"
+                    id="pfContagem"
+                >
+                    0 de 6
+                    <small>fotos adicionadas</small>
+                </div>
+
+                <div
+                    class="pf-mensagem"
+                    id="pfMensagem"
+                >
+                    Comece pela Foto 1 👇
+                </div>
+
+            </div>
+
+
+            <div class="pf-barra">
+
+                <div
+                    class="pf-barra-preenchida"
+                    id="pfBarra"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOTOS -->
+
+        <div
+            class="grade-portfolio"
+            id="gradePortfolio"
+        >
+
+            <!-- FOTO 1 -->
+
+            <label
+                class="slot-foto"
+                for="foto1"
+                data-numero="1"
+            >
+
+                <span class="pf-numero">
+                    1
+                </span>
+
+                <div class="slot-conteudo">
+
+                    <span class="icone-foto">
+                        +
+                    </span>
+
+                    <strong>
+                        Foto 1
+                    </strong>
+
+                    <small>
+                        Clique para escolher
+                    </small>
+
+                </div>
+
+                <span class="pf-trocar">
+                    Clique para trocar
+                </span>
+
+                <button
+                    class="pf-remover"
+                    type="button"
+                    aria-label="Remover foto 1"
+                >
+                    ×
+                </button>
+
+                <input
+                    type="file"
+                    id="foto1"
+                    name="portfolio[]"
+                    accept="image/*"
+                >
+
+            </label>
+
+
+            <!-- FOTO 2 -->
+
+            <label
+                class="slot-foto"
+                for="foto2"
+                data-numero="2"
+            >
+
+                <span class="pf-numero">
+                    2
+                </span>
+
+                <div class="slot-conteudo">
+
+                    <span class="icone-foto">
+                        +
+                    </span>
+
+                    <strong>
+                        Foto 2
+                    </strong>
+
+                    <small>
+                        Clique para escolher
+                    </small>
+
+                </div>
+
+                <span class="pf-trocar">
+                    Clique para trocar
+                </span>
+
+                <button
+                    class="pf-remover"
+                    type="button"
+                    aria-label="Remover foto 2"
+                >
+                    ×
+                </button>
+
+                <input
+                    type="file"
+                    id="foto2"
+                    name="portfolio[]"
+                    accept="image/*"
+                >
+
+            </label>
+
+
+            <!-- FOTO 3 -->
+
+            <label
+                class="slot-foto"
+                for="foto3"
+                data-numero="3"
+            >
+
+                <span class="pf-numero">
+                    3
+                </span>
+
+                <div class="slot-conteudo">
+
+                    <span class="icone-foto">
+                        +
+                    </span>
+
+                    <strong>
+                        Foto 3
+                    </strong>
+
+                    <small>
+                        Clique para escolher
+                    </small>
+
+                </div>
+
+                <span class="pf-trocar">
+                    Clique para trocar
+                </span>
+
+                <button
+                    class="pf-remover"
+                    type="button"
+                    aria-label="Remover foto 3"
+                >
+                    ×
+                </button>
+
+                <input
+                    type="file"
+                    id="foto3"
+                    name="portfolio[]"
+                    accept="image/*"
+                >
+
+            </label>
+
+
+            <!-- FOTO 4 -->
+
+            <label
+                class="slot-foto"
+                for="foto4"
+                data-numero="4"
+            >
+
+                <span class="pf-numero">
+                    4
+                </span>
+
+                <div class="slot-conteudo">
+
+                    <span class="icone-foto">
+                        +
+                    </span>
+
+                    <strong>
+                        Foto 4
+                    </strong>
+
+                    <small>
+                        Clique para escolher
+                    </small>
+
+                </div>
+
+                <span class="pf-trocar">
+                    Clique para trocar
+                </span>
+
+                <button
+                    class="pf-remover"
+                    type="button"
+                    aria-label="Remover foto 4"
+                >
+                    ×
+                </button>
+
+                <input
+                    type="file"
+                    id="foto4"
+                    name="portfolio[]"
+                    accept="image/*"
+                >
+
+            </label>
+
+
+            <!-- FOTO 5 -->
+
+            <label
+                class="slot-foto"
+                for="foto5"
+                data-numero="5"
+            >
+
+                <span class="pf-numero">
+                    5
+                </span>
+
+                <div class="slot-conteudo">
+
+                    <span class="icone-foto">
+                        +
+                    </span>
+
+                    <strong>
+                        Foto 5
+                    </strong>
+
+                    <small>
+                        Clique para escolher
+                    </small>
+
+                </div>
+
+                <span class="pf-trocar">
+                    Clique para trocar
+                </span>
+
+                <button
+                    class="pf-remover"
+                    type="button"
+                    aria-label="Remover foto 5"
+                >
+                    ×
+                </button>
+
+                <input
+                    type="file"
+                    id="foto5"
+                    name="portfolio[]"
+                    accept="image/*"
+                >
+
+            </label>
+
+
+            <!-- FOTO 6 -->
+
+            <label
+                class="slot-foto"
+                for="foto6"
+                data-numero="6"
+            >
+
+                <span class="pf-numero">
+                    6
+                </span>
+
+                <div class="slot-conteudo">
+
+                    <span class="icone-foto">
+                        +
+                    </span>
+
+                    <strong>
+                        Foto 6
+                    </strong>
+
+                    <small>
+                        Clique para escolher
+                    </small>
+
+                </div>
+
+                <span class="pf-trocar">
+                    Clique para trocar
+                </span>
+
+                <button
+                    class="pf-remover"
+                    type="button"
+                    aria-label="Remover foto 6"
+                >
+                    ×
+                </button>
+
+                <input
+                    type="file"
+                    id="foto6"
+                    name="portfolio[]"
+                    accept="image/*"
+                >
+
+            </label>
+
+        </div>
+
+
+        <div
+            class="pf-erro"
+            id="pfErro"
+            role="alert"
+        ></div>
+
+
+        <button
+            class="btn-form btn-finalizar"
+            id="btnFinalizar"
+            type="submit"
+            disabled
+        >
+            Adicione mais 3 fotos para continuar
+        </button>
+
+    </form>
+
+</main>
+
+
+<footer>
+
+    © 2026
+    <span>Dekko</span>
+    — Encontre. Converse. Resolva.
+
+</footer>
+
+
+<!-- JS DA PÁGINA -->
+
+<script src="../js/portifolio.js?v=1"></script>
+
+
+<!-- VLibras -->
+
+<div vw class="enabled">
+
+    <div
+        vw-access-button
+        class="active"
+    ></div>
+
+    <div vw-plugin-wrapper>
+
+        <div class="vw-plugin-top-wrapper"></div>
+
+    </div>
+
+</div>
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+<script>
+    new window.VLibras.Widget(
+        "https://vlibras.gov.br/app"
+    );
+</script>
+
+
+</body>
+</html>

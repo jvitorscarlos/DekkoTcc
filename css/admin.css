@@ -1,0 +1,532 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+body {
+font-family: Arial, Helvetica, sans-serif;
+background: #f5f5f5;
+color: #333;
+}
+
+/* =========================
+TOPO
+========================= */
+
+.topo {
+width: 100%;
+background: #222;
+color: white;
+padding: 20px 50px;
+
+
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+
+}
+
+.topo h1 {
+font-size: 28px;
+margin-bottom: 4px;
+letter-spacing: 2px;
+}
+
+.topo span {
+color: #ddd;
+font-size: 14px;
+}
+
+.admin-info {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.admin-info strong {
+display: block;
+font-size: 14px;
+}
+
+.admin-info small {
+display: block;
+color: #bbb;
+margin-top: 3px;
+}
+
+.admin-avatar {
+width: 42px;
+height: 42px;
+
+
+border-radius: 50%;
+
+background: #ff9d00;
+color: white;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+font-weight: bold;
+font-size: 18px;
+
+
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container {
+width: 92%;
+max-width: 1400px;
+margin: 35px auto;
+}
+
+/* =========================
+BOAS-VINDAS
+========================= */
+
+.boas-vindas {
+margin-bottom: 25px;
+}
+
+.boas-vindas h2 {
+font-size: 26px;
+margin-bottom: 8px;
+}
+
+.boas-vindas p {
+color: #777;
+}
+
+/* =========================
+CARDS
+========================= */
+
+.cards {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 20px;
+margin-bottom: 30px;
+}
+
+.card {
+background: white;
+border-radius: 12px;
+
+
+padding: 22px;
+
+display: flex;
+align-items: center;
+gap: 18px;
+
+box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+border-left: 5px solid #ff9d00;
+
+
+}
+
+.icone {
+width: 50px;
+height: 50px;
+
+
+border-radius: 10px;
+
+background: #fff1d6;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+font-size: 24px;
+
+
+}
+
+.card p {
+color: #777;
+font-size: 14px;
+margin-bottom: 5px;
+}
+
+.card h3 {
+font-size: 27px;
+}
+
+/* =========================
+FILTROS
+========================= */
+
+.filtros {
+background: white;
+
+
+padding: 20px;
+
+border-radius: 12px;
+
+margin-bottom: 30px;
+
+display: flex;
+gap: 15px;
+
+box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+
+
+}
+
+.filtros input,
+.filtros select {
+padding: 12px 15px;
+
+
+border: 1px solid #ddd;
+border-radius: 8px;
+
+font-size: 14px;
+
+outline: none;
+
+
+}
+
+.filtros input {
+flex: 1;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+border-color: #ff9d00;
+}
+
+/* =========================
+ÁREAS
+========================= */
+
+.area {
+background: white;
+
+
+border-radius: 12px;
+
+padding: 25px;
+
+margin-bottom: 30px;
+
+box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+
+
+}
+
+.titulo-area {
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+
+margin-bottom: 20px;
+
+
+}
+
+.titulo-area h2 {
+font-size: 21px;
+margin-bottom: 5px;
+}
+
+.titulo-area p {
+color: #777;
+font-size: 14px;
+}
+
+.contador {
+background: #fff1d6;
+color: #d87900;
+
+
+padding: 8px 14px;
+
+border-radius: 20px;
+
+font-size: 13px;
+font-weight: bold;
+
+
+}
+
+/* =========================
+TABELAS
+========================= */
+
+.tabela-container {
+width: 100%;
+overflow-x: auto;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+}
+
+thead {
+background: #f7f7f7;
+}
+
+th {
+text-align: left;
+
+
+padding: 14px;
+
+font-size: 13px;
+
+color: #555;
+
+border-bottom: 1px solid #ddd;
+
+
+}
+
+td {
+padding: 14px;
+
+
+border-bottom: 1px solid #eee;
+
+font-size: 14px;
+
+
+}
+
+tbody tr:hover {
+background: #fffaf2;
+}
+
+/* =========================
+FOTOS
+========================= */
+
+.foto {
+width: 38px;
+height: 38px;
+
+
+border-radius: 50%;
+
+background: #ff9d00;
+color: white;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+font-weight: bold;
+
+font-size: 13px;
+
+
+}
+
+/* =========================
+AÇÕES
+========================= */
+
+.acoes {
+display: flex;
+gap: 6px;
+}
+
+.acoes button {
+border: none;
+
+
+width: 34px;
+height: 34px;
+
+border-radius: 7px;
+
+background: #f2f2f2;
+
+cursor: pointer;
+
+font-size: 15px;
+
+transition: 0.2s;
+
+
+}
+
+.acoes button:hover {
+background: #ff9d00;
+color: white;
+}
+
+/* =========================
+CONVERSAS
+========================= */
+
+.conversas {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.conversa {
+display: flex;
+align-items: center;
+
+
+gap: 15px;
+
+padding: 15px;
+
+border: 1px solid #eee;
+
+border-radius: 10px;
+
+
+}
+
+.conversa-info {
+flex: 1;
+}
+
+.conversa-info strong {
+display: block;
+font-size: 14px;
+margin-bottom: 4px;
+}
+
+.conversa-info span {
+color: #777;
+font-size: 13px;
+}
+
+/* =========================
+STATUS
+========================= */
+
+.status {
+padding: 7px 12px;
+
+
+border-radius: 20px;
+
+font-size: 12px;
+
+font-weight: bold;
+
+
+}
+
+.status.andamento {
+background: #fff1d6;
+color: #d87900;
+}
+
+.status.encerrada {
+background: #e8f7ed;
+color: #2e8b57;
+}
+
+/* =========================
+REGIÕES
+========================= */
+
+.regioes {
+display: grid;
+
+
+grid-template-columns: repeat(4, 1fr);
+
+gap: 15px;
+
+
+}
+
+.regioes div {
+padding: 18px;
+
+
+border-radius: 10px;
+
+background: #fff8eb;
+
+border: 1px solid #ffe0a3;
+
+font-weight: bold;
+
+text-align: center;
+
+
+}
+
+/* =========================
+RODAPÉ
+========================= */
+
+footer {
+text-align: center;
+
+
+padding: 25px;
+
+color: #888;
+
+font-size: 13px;
+
+
+}
+
+/* =========================
+RESPONSIVO
+========================= */
+
+@media (max-width: 900px) {
+
+
+.cards {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.regioes {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+
+}
+
+@media (max-width: 600px) {
+
+
+.topo {
+    padding: 18px 20px;
+}
+
+.container {
+    width: 94%;
+}
+
+.cards {
+    grid-template-columns: 1fr;
+}
+
+.filtros {
+    flex-direction: column;
+}
+
+.regioes {
+    grid-template-columns: 1fr;
+}
+
+.admin-info {
+    display: none;
+}
+}

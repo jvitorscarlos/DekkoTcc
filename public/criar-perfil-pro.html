@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dekko - Criar perfil</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=17">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">De<span>kko</span></div>
+
+    <div class="menu">
+        <button
+            class="btn-entrar"
+            type="button"
+            onclick="window.location.href='index.html'">
+            ← Voltar
+        </button>
+    </div>
+</header>
+
+
+<main class="criar-perfil">
+
+    <div class="titulo-pagina">
+
+        <div class="tag">
+            👤 DEKKO • MEU PERFIL
+        </div>
+
+        <h1>
+            Monte seu <span>perfil profissional.</span>
+        </h1>
+
+        <p>
+            Mostre quem você é e apresente seu trabalho para os clientes.
+        </p>
+
+    </div>
+
+
+    <form
+        class="formulario-perfil"
+        id="formPerfil"
+        onsubmit="irParaPortfolio(event)">
+
+        <!-- FOTO DE PERFIL -->
+
+        <section class="foto-perfil-area">
+
+            <h2>
+                Sua foto de perfil
+            </h2>
+
+            <p>
+                Escolha uma foto para representar você no Dekko.
+            </p>
+
+            <div class="preview-perfil">
+
+                <div
+                    class="avatar-preview"
+                    id="avatarPreview">
+
+                    👤
+
+                </div>
+
+            </div>
+
+            <label
+                for="fotoPerfil"
+                class="btn-foto">
+
+                📷 Escolher foto
+
+            </label>
+
+            <input
+                type="file"
+                id="fotoPerfil"
+                name="foto_perfil"
+                accept="image/*"
+                required
+                onchange="mostrarFotoPerfil(event)">
+
+            <small>
+                A foto de perfil é obrigatória.
+            </small>
+
+        </section>
+
+
+        <!-- INFORMAÇÕES -->
+
+        <section class="dados-perfil">
+
+            <h2>
+                Sobre você
+            </h2>
+
+            <div class="campo">
+
+                <label for="nomePerfil">
+                    Nome Profissional
+                </label>
+
+                <input
+                    type="text"
+                    id="nomePerfil"
+                    name="nome"
+                    placeholder="Como você quer ser apresentado?"
+                    required>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="bio">
+                    Biografia
+                </label>
+
+                <textarea
+                    id="bio"
+                    name="bio"
+                    rows="4"
+                    placeholder="Conte um pouco sobre você e seu trabalho..."></textarea>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="redeSocial">
+                    Rede social
+                    <span>(opcional)</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="redeSocial"
+                    name="rede_social"
+                    placeholder="@seuperfil ou link">
+
+            </div>
+
+        </section>
+
+
+        <button
+            class="btn-form btn-continuar"
+            type="submit">
+
+            Continuar para o portfólio →
+
+        </button>
+
+    </form>
+
+</main>
+
+
+<footer>
+    © 2026 <span>Dekko</span> — Encontre. Converse. Resolva.
+</footer>
+
+
+<script src="../js/criar-perfil-pro.js"></script>
+
+<!-- VLibras -->
+<div vw class="enabled">
+
+    <div vw-access-button class="active"></div>
+
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+
+</div>
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+<script>
+    new window.VLibras.Widget("https://vlibras.gov.br/app");
+</script>
+
+</body>
+</html>

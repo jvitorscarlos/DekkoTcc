@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dekko - Busca de Serviços</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=17">
+
+    <link rel="stylesheet" href="../css/home.css?v=1">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="logo">
+            De<span>kko</span>
+        </div>
+
+        <div class="menu">
+
+            <button
+                class="btn-entrar"
+                type="button"
+                onclick="irParaComoUsar()"
+            >
+                Como usar
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="texto">
+
+            <div class="tag">
+                🔎 DEKKO • SERVIÇOS
+            </div>
+
+            <h1>
+                Encontre o
+                <span>profissional</span>
+                certo.
+            </h1>
+
+            <p>
+                A Dekko conecta clientes e profissionais
+                de maneira simples, rápida e prática.
+                Encontre o serviço que precisa ou
+                divulgue o seu trabalho.
+            </p>
+
+            <div class="botoes">
+
+                <button
+                    class="btn-cadastrar"
+                    type="button"
+                    onclick="abrirCadastro()"
+                >
+                    Criar conta
+                </button>
+
+                <button
+                    class="btn-entrar"
+                    type="button"
+                    onclick="abrirLogin()"
+                >
+                    Entrar
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="imagem">
+            <img
+                src="dekin.jpg"
+                alt="Dekkinho, mascote da Dekko"
+            >
+        </div>
+
+    </section>
+
+
+    <!-- FAIXA DE SEGURANÇA -->
+    <section class="faixa-seguranca">
+
+        <p>
+            <strong>🔒 Segurança em primeiro lugar:</strong>
+            combine tudo pelo chat do Dekko e só feche o serviço
+            depois de confirmar.
+        </p>
+
+        <button
+            type="button"
+            onclick="dekkinhoFalar('seguranca')"
+        >
+            Ver dicas de segurança
+        </button>
+
+    </section>
+
+
+    <!-- COMO USAR -->
+    <section class="sobre" id="como-usar">
+
+        <h2>Como usar o Dekko</h2>
+
+        <p>
+            A Dekko foi feita para conectar clientes
+            e profissionais. Veja como é simples.
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="icone">🔎</div>
+
+                <h3>Encontre</h3>
+
+                <p>
+                    Procure profissionais e serviços de diversas áreas.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icone">🧑‍🔧</div>
+
+                <h3>Ofereça</h3>
+
+                <p>
+                    Cadastre seu serviço e encontre novos clientes.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icone">💬</div>
+
+                <h3>Converse</h3>
+
+                <p>
+                    Entre em contato com o profissional e combine
+                    os detalhes do serviço.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PASSO A PASSO -->
+        <div class="trilhas">
+
+            <!-- CLIENTE -->
+            <div class="trilha">
+
+                <div class="trilha-titulo">
+                    <div class="icone">👤</div>
+                    <div>
+                        <h3>Sou cliente</h3>
+                        <span>Quero contratar um serviço</span>
+                    </div>
+                </div>
+
+                <ol>
+                    <li>
+                        <strong>Crie sua conta</strong>
+                        <span>Cadastre-se como cliente com seu nome, e-mail e região.</span>
+                    </li>
+                    <li>
+                        <strong>Busque o serviço</strong>
+                        <span>Digite o que precisa e escolha a região para ver os profissionais.</span>
+                    </li>
+                    <li>
+                        <strong>Confira o perfil</strong>
+                        <span>Veja a apresentação e as fotos do portfólio antes de decidir.</span>
+                    </li>
+                    <li>
+                        <strong>Converse e combine</strong>
+                        <span>Use o chat para combinar detalhes e valor. Depois, confirme o serviço.</span>
+                    </li>
+                </ol>
+
+            </div>
+
+
+            <!-- PROFISSIONAL -->
+            <div class="trilha">
+
+                <div class="trilha-titulo">
+                    <div class="icone">🧑‍🔧</div>
+                    <div>
+                        <h3>Sou profissional</h3>
+                        <span>Quero oferecer meus serviços</span>
+                    </div>
+                </div>
+
+                <ol>
+                    <li>
+                        <strong>Crie sua conta</strong>
+                        <span>Cadastre-se como profissional e escolha os serviços que você oferece.</span>
+                    </li>
+                    <li>
+                        <strong>Monte seu perfil</strong>
+                        <span>Adicione sua foto, uma biografia e sua rede social.</span>
+                    </li>
+                    <li>
+                        <strong>Mostre seu trabalho</strong>
+                        <span>Envie até 6 fotos de trabalhos que você já fez, no seu portfólio.</span>
+                    </li>
+                    <li>
+                        <strong>Receba clientes</strong>
+                        <span>Responda as mensagens, combine o serviço e peça a confirmação.</span>
+                    </li>
+                </ol>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        © 2026
+
+        <span>Dekko</span>
+
+        — Encontre. Converse. Resolva.
+
+    </footer>
+
+
+    <!-- ================================= -->
+    <!-- DEKKINHO                          -->
+    <!-- ================================= -->
+
+    <button
+        class="dk-botao"
+        type="button"
+        aria-label="Abrir conversa com o Dekkinho"
+        onclick="alternarDekkinho()"
+    >
+        <img
+            src="../img/dekkinhocell.jpg"
+            alt="Dekkinho"
+            onerror="this.onerror=null; this.src='dekin.jpg'"
+        >
+    </button>
+
+    <div
+        class="dk-painel"
+        id="dkPainel"
+        role="dialog"
+        aria-label="Conversa com o Dekkinho"
+    >
+
+        <div class="dk-topo">
+
+            <div class="dk-avatar">
+                <img
+                    src="../img/rostodekko.jpg"
+                    alt="Dekkinho"
+                    onerror="this.onerror=null; this.src='dekin.jpg'"
+                >
+            </div>
+
+            <div>
+                <strong>Dekkinho</strong>
+                <small>Seu ajudante no Dekko</small>
+            </div>
+
+            <button
+                class="dk-fechar"
+                type="button"
+                aria-label="Fechar conversa"
+                onclick="fecharDekkinho()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="dk-conversa" id="dkConversa"></div>
+
+        <div class="dk-opcoes">
+
+            <button type="button" onclick="dekkinhoFalar('sobre')">
+                💡 Sobre o Dekko
+            </button>
+
+            <button type="button" onclick="dekkinhoFalar('seguranca')">
+                🔒 Dicas de segurança
+            </button>
+
+            <button type="button" onclick="dekkinhoFalar('como')">
+                🧭 Como usar
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOGIN -->
+    <div class="modal" id="login">
+
+        <div class="caixa">
+
+            <button
+                class="fechar"
+                type="button"
+                onclick="fechar()"
+            >
+                ×
+            </button>
+
+            <h2>Entrar na Dekko</h2>
+
+            <p>
+                O mesmo login serve para clientes
+                e profissionais.
+            </p>
+
+            <form onsubmit="fazerLogin(event)">
+
+                <div class="campo">
+
+                    <label>E-mail</label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Senha</label>
+
+                    <input
+                        type="password"
+                        name="senha"
+                        placeholder="Digite sua senha"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    class="btn-form"
+                    type="submit"
+                >
+                    Entrar
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ESCOLHA DO CADASTRO -->
+    <div class="modal" id="cadastro">
+
+        <div class="caixa">
+
+            <button
+                class="fechar"
+                type="button"
+                onclick="fechar()"
+            >
+                ×
+            </button>
+
+            <h2>Criar conta</h2>
+
+            <p>
+                Você deseja se cadastrar como:
+            </p>
+
+            <div class="escolha">
+
+                <div
+                    class="tipo"
+                    onclick="abrirCliente()"
+                >
+
+                    <div class="emoji">👤</div>
+
+                    <h3>Cliente</h3>
+
+                    <p>
+                        Quero contratar serviços
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="tipo"
+                    onclick="abrirProfissional()"
+                >
+
+                    <div class="emoji">🧑‍🔧</div>
+
+                    <h3>Profissional</h3>
+
+                    <p>
+                        Quero oferecer serviços
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CLIENTE -->
+    <div class="modal" id="cliente">
+
+        <div class="caixa">
+
+            <button
+                class="fechar"
+                type="button"
+                onclick="fechar()"
+            >
+                ×
+            </button>
+
+            <h2>Cadastro de Cliente</h2>
+
+            <p>
+                Crie seus dados de acesso.
+            </p>
+
+            <form onsubmit="cadastrarCliente(event)">
+
+                <div class="campo">
+
+                    <label>Nome</label>
+
+                    <input
+                        type="text"
+                        name="nome"
+                        placeholder="Digite seu nome"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>E-mail</label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Senha</label>
+
+                    <input
+                        type="password"
+                        name="senha"
+                        placeholder="Crie sua senha"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Telefone</label>
+
+                    <input
+                        type="tel"
+                        name="telefone"
+                        placeholder="Digite seu telefone"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Região</label>
+
+                    <select
+                        name="regiao"
+                        required
+                    >
+
+                        <option value="">
+                            Selecione sua região
+                        </option>
+
+                        <option value="Paracambi">
+                            Paracambi
+                        </option>
+
+                        <option value="Japeri">
+                            Japeri
+                        </option>
+
+                        <option value="Queimados">
+                            Queimados
+                        </option>
+
+                        <option value="Seropédica">
+                            Seropédica
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    class="btn-form"
+                    type="submit"
+                >
+                    Criar conta
+                </button>
+
+            </form>
+
+
+            <button
+                class="voltar"
+                type="button"
+                onclick="abrirCadastro()"
+            >
+                ← Voltar
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- PROFISSIONAL -->
+    <div class="modal" id="profissional">
+
+        <div class="caixa">
+
+            <button
+                class="fechar"
+                type="button"
+                onclick="fechar()"
+            >
+                ×
+            </button>
+
+            <h2>Cadastro de Profissional</h2>
+
+            <p>
+                Cadastre seu serviço na Dekko.
+            </p>
+
+            <form onsubmit="cadastrarProfissional(event)">
+
+                <div class="campo">
+
+                    <label>Nome</label>
+
+                    <input
+                        type="text"
+                        name="nome"
+                        placeholder="Digite seu nome"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>E-mail</label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Senha</label>
+
+                    <input
+                        type="password"
+                        name="senha"
+                        placeholder="Crie sua senha"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- SERVIÇOS -->
+                <div class="campo">
+
+                    <label>
+                        Serviços que você oferece
+                    </label>
+
+                    <div class="servicos-checkbox">
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="servicos[]"
+                                value="Barbeiro"
+                            >
+                            Barbeiro
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="servicos[]"
+                                value="Cabeleireira"
+                            >
+                            Cabeleireira
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="servicos[]"
+                                value="Manicure"
+                            >
+                            Manicure
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="servicos[]"
+                                value="Eletricista"
+                            >
+                            Eletricista
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="servicos[]"
+                                value="Encanador"
+                            >
+                            Encanador
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="servicos[]"
+                                value="Técnico de informática"
+                            >
+                            Técnico de informática
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="servicos[]"
+                                value="Fotógrafo"
+                            >
+                            Fotógrafo
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="servicos[]"
+                                value="Designer"
+                            >
+                            Designer
+                        </label>
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="servicos[]"
+                                value="Professor"
+                            >
+                            Professor
+                        </label>
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                id="checkboxOutro"
+                                name="servicos[]"
+                                value="outro"
+                                onchange="verificarOutroServico()"
+                            >
+
+                            Outro serviço
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- OUTRO SERVIÇO -->
+                <div
+                    class="campo outro"
+                    id="outro"
+                >
+
+                    <label>
+                        Digite seu serviço
+                    </label>
+
+                    <input
+                        type="text"
+                        id="outroServico"
+                        name="servico_outro"
+                        placeholder="Qual serviço você oferece?"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Telefone</label>
+
+                    <input
+                        type="tel"
+                        name="telefone"
+                        placeholder="Digite seu telefone"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Endereço</label>
+
+                    <input
+                        type="text"
+                        name="endereco"
+                        placeholder="Digite seu endereço"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Região</label>
+
+                    <select
+                        name="regiao"
+                        required
+                    >
+
+                        <option value="">
+                            Selecione sua região
+                        </option>
+
+                        <option value="Paracambi">
+                            Paracambi
+                        </option>
+
+                        <option value="Japeri">
+                            Japeri
+                        </option>
+
+                        <option value="Queimados">
+                            Queimados
+                        </option>
+
+                        <option value="Seropédica">
+                            Seropédica
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    class="btn-form"
+                    type="submit"
+                >
+                    Criar conta profissional
+                </button>
+
+            </form>
+
+
+            <button
+                class="voltar"
+                type="button"
+                onclick="abrirCadastro()"
+            >
+                ← Voltar
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- EDITAR PERFIL                     -->
+    <!-- ================================= -->
+
+    <div
+        class="modal"
+        id="modalEditarPerfil"
+    >
+
+        <div class="caixa">
+
+            <button
+                class="fechar"
+                type="button"
+                onclick="fecharEditarPerfil()"
+            >
+                ×
+            </button>
+
+            <h2>Editar perfil</h2>
+
+            <p>
+                Altere suas informações abaixo.
+            </p>
+
+
+            <form id="formEditarPerfil">
+
+                <div class="campo">
+
+                    <label for="editarNome">
+                        Nome
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editarNome"
+                        name="nome"
+                        value="João"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="editarEmail">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="editarEmail"
+                        name="email"
+                        value="email@gmail.com"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="editarTelefone">
+                        Telefone
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="editarTelefone"
+                        name="telefone"
+                        value="(21) 99999-9999"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="editarRegiao">
+                        Região
+                    </label>
+
+                    <select
+                        id="editarRegiao"
+                        name="regiao"
+                        required
+                    >
+
+                        <option value="Paracambi">
+                            Paracambi
+                        </option>
+
+                        <option value="Japeri">
+                            Japeri
+                        </option>
+
+                        <option value="Queimados">
+                            Queimados
+                        </option>
+
+                        <option value="Seropédica">
+                            Seropédica
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="editarSenha">
+                        Nova senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="editarSenha"
+                        name="senha"
+                        placeholder="Digite uma nova senha"
+                    >
+
+                </div>
+
+
+                <button
+                    class="btn-form"
+                    type="submit"
+                >
+                    Salvar alterações
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript do Dekko -->
+   <script src="../js/index.js?v=2"></script>
+
+
+    <!-- JavaScript do Dekkinho -->
+    <script src="../js/dekkinho.js?v=1"></script>
+
+
+    <!-- VLibras -->
+    <div vw class="enabled">
+
+        <div
+            vw-access-button
+            class="active"
+        ></div>
+
+        <div vw-plugin-wrapper>
+
+            <div class="vw-plugin-top-wrapper"></div>
+
+        </div>
+
+    </div>
+
+
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+    <script>
+
+        new window.VLibras.Widget(
+            "https://vlibras.gov.br/app"
+        );
+
+    </script>
+
+</body>
+
+</html>

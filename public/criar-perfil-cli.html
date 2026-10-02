@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dekko - Criar perfil de cliente</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=18">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        De<span>kko</span>
+    </div>
+
+    <div class="menu">
+
+        <button
+            class="btn-entrar"
+            type="button"
+            onclick="window.location.href='index.html'">
+
+            ← Voltar
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="criar-perfil">
+
+    <div class="titulo-pagina">
+
+        <div class="tag">
+            👤 DEKKO • MEU PERFIL
+        </div>
+
+        <h1>
+            Crie seu <span>perfil.</span>
+        </h1>
+
+        <p>
+            Adicione sua foto e seus dados para conversar com os profissionais.
+        </p>
+
+    </div>
+
+
+    <form
+        class="formulario-perfil"
+        id="formPerfilCliente">
+
+
+        <!-- FOTO DE PERFIL -->
+
+        <section class="foto-perfil-area">
+
+            <h2>
+                Sua foto de perfil
+            </h2>
+
+            <p>
+                Escolha uma foto para os profissionais te reconhecerem.
+            </p>
+
+
+            <div class="preview-perfil">
+
+                <div
+                    class="avatar-preview"
+                    id="avatarPreviewCliente">
+
+                    👤
+
+                </div>
+
+            </div>
+
+
+            <label
+                for="fotoCliente"
+                class="btn-foto">
+
+                📷 Escolher foto
+
+            </label>
+
+
+            <input
+                type="file"
+                id="fotoCliente"
+                name="foto"
+                accept="image/*"
+                hidden>
+
+
+            <small>
+                A foto de perfil é obrigatória.
+            </small>
+
+        </section>
+
+
+
+        <!-- INFORMAÇÕES -->
+
+        <section class="dados-perfil">
+
+            <h2>
+                Sobre você
+            </h2>
+
+
+            <div class="campo">
+
+                <label for="nomeCliente">
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="nomeCliente"
+                    name="nome"
+                    placeholder="Como você quer ser chamado?"
+                    required>
+
+            </div>
+
+
+
+            <div class="campo">
+
+                <label for="regiaoCliente">
+                    Região
+                </label>
+
+                <select
+                    id="regiaoCliente"
+                    name="regiao"
+                    required>
+
+                    <option value="">
+                        Selecione sua região
+                    </option>
+
+                    <option value="Paracambi">
+                        Paracambi
+                    </option>
+
+                    <option value="Japeri">
+                        Japeri
+                    </option>
+
+                    <option value="Queimados">
+                        Queimados
+                    </option>
+
+                    <option value="Seropédica">
+                        Seropédica
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <div class="campo">
+
+                <label for="telefoneCliente">
+                    Telefone
+                </label>
+
+                <input
+                    type="tel"
+                    id="telefoneCliente"
+                    name="telefone"
+                    placeholder="(21) 99999-9999"
+                    required>
+
+            </div>
+
+        </section>
+
+
+
+        <button
+            class="btn-form btn-continuar"
+            type="submit">
+
+            Finalizar e buscar profissionais →
+
+        </button>
+
+    </form>
+
+</main>
+
+
+
+<footer>
+
+    © 2026 <span>Dekko</span> — Encontre. Converse. Resolva.
+
+</footer>
+
+
+
+<!-- JS DO PERFIL -->
+
+<script src="../js/criar-perfil-cli.js?v=2"></script>
+
+
+
+<!-- VLibras -->
+
+<div vw class="enabled">
+
+    <div
+        vw-access-button
+        class="active">
+    </div>
+
+    <div vw-plugin-wrapper>
+
+        <div class="vw-plugin-top-wrapper"></div>
+
+    </div>
+
+</div>
+
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+<script>
+
+    new window.VLibras.Widget(
+        "https://vlibras.gov.br/app"
+    );
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dekko - Profissionais</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css?v=17"
+    >
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        De<span>kko</span>
+    </div>
+
+    <div class="menu">
+
+        <!-- PERFIL -->
+        <div class="perfil-menu">
+
+            <button
+                class="btn-perfil"
+                type="button"
+                onclick="abrirMenuPerfil()"
+            >
+                👤
+            </button>
+
+            <div
+                class="menu-perfil"
+                id="menuPerfil"
+            >
+
+                <div class="perfil-info">
+                    <strong>Meu perfil</strong>
+                </div>
+
+                <button
+                    type="button"
+                    onclick="editarPerfil(event)"
+                >
+                    ⚙️ Editar perfil
+                </button>
+
+                <button
+                    type="button"
+                    onclick="sairConta()"
+                >
+                    🚪 Sair da conta
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="pagina-profissionais">
+
+    <!-- TÍTULO -->
+    <div class="titulo-profissionais">
+
+        <div class="tag">
+            🔎 DEKKO • BUSCAR PROFISSIONAL
+        </div>
+
+        <h1>
+            Encontre o profissional
+            <span>certo.</span>
+        </h1>
+
+        <p>
+            Escolha o serviço e a região para encontrar profissionais próximos de você.
+        </p>
+
+    </div>
+
+
+    <!-- BUSCA -->
+    <div class="busca-profissionais">
+
+        <!-- SERVIÇO -->
+        <div class="campo">
+
+            <label for="buscaServico">
+                O que você procura?
+            </label>
+
+            <div class="pesquisa-servico">
+
+                <input
+                    type="text"
+                    id="buscaServico"
+                    placeholder="Digite um serviço..."
+                    autocomplete="off"
+                >
+
+                <div
+                    id="sugestoesServico"
+                    class="sugestoes-servico"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- REGIÃO -->
+        <div class="campo">
+
+            <label for="buscaRegiao">
+                Região
+            </label>
+
+            <select id="buscaRegiao">
+
+                <option value="">
+                    Todas as regiões
+                </option>
+
+                <option value="Paracambi">
+                    Paracambi
+                </option>
+
+                <option value="Japeri">
+                    Japeri
+                </option>
+
+                <option value="Queimados">
+                    Queimados
+                </option>
+
+                <option value="Seropédica">
+                    Seropédica
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- BOTÃO -->
+        <button
+            class="btn-form"
+            type="button"
+            onclick="buscarProfissionais()"
+        >
+            🔎 Buscar
+        </button>
+
+    </div>
+
+
+    <!-- RESULTADOS DA PESQUISA -->
+    <section
+        class="lista-profissionais"
+        id="areaResultados"
+        style="display: none;"
+    >
+
+        <h2>
+            Resultados da pesquisa
+        </h2>
+
+        <div
+            id="listaProfissionais"
+            class="cards-profissionais"
+        ></div>
+
+    </section>
+
+
+    <!-- FAVORITOS -->
+    <section class="lista-profissionais favoritos-profissionais">
+
+        <h2>
+            ⭐ Meus favoritos
+        </h2>
+
+        <div
+            id="listaFavoritos"
+            class="cards-profissionais"
+        ></div>
+
+    </section>
+
+</main>
+
+
+<!-- MODAL EDITAR PERFIL -->
+<div
+    class="modal"
+    id="modalEditarPerfil"
+>
+
+    <div class="caixa">
+
+        <button
+            class="fechar"
+            type="button"
+            onclick="fecharEditarPerfil()"
+        >
+            ×
+        </button>
+
+        <h2>
+            Editar perfil
+        </h2>
+
+        <p>
+            Altere suas informações.
+        </p>
+
+
+        <form id="formEditarPerfil">
+
+            <!-- FOTO DO PERFIL -->
+            <div class="foto-editar">
+
+                <div
+                    class="foto-editar-previa"
+                    id="previaFotoPerfil"
+                >
+                    👤
+                </div>
+
+                <div class="foto-editar-acoes">
+
+                    <label
+                        for="fotoBalao"
+                        class="btn-foto"
+                    >
+                        📷 Escolher foto
+                    </label>
+
+                    <input
+                        type="file"
+                        id="fotoBalao"
+                        accept="image/*"
+                    >
+
+                    <button
+                        type="button"
+                        class="foto-editar-remover"
+                        id="removerFotoPerfil"
+                    >
+                        Remover foto
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="editarNome">
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="editarNome"
+                    name="nome"
+                    required
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="editarEmail">
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="editarEmail"
+                    name="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="editarTelefone">
+                    Telefone
+                </label>
+
+                <input
+                    type="tel"
+                    id="editarTelefone"
+                    name="telefone"
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="editarRegiao">
+                    Região
+                </label>
+
+                <select
+                    id="editarRegiao"
+                    name="regiao"
+                    required
+                >
+
+                    <option value="Paracambi">
+                        Paracambi
+                    </option>
+
+                    <option value="Japeri">
+                        Japeri
+                    </option>
+
+                    <option value="Queimados">
+                        Queimados
+                    </option>
+
+                    <option value="Seropédica">
+                        Seropédica
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="editarSenha">
+                    Nova senha
+                </label>
+
+                <input
+                    type="password"
+                    id="editarSenha"
+                    name="senha"
+                    placeholder="Deixe vazio para manter a atual"
+                >
+
+            </div>
+
+
+            <button
+                class="btn-form"
+                type="submit"
+            >
+                Salvar alterações
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    © 2026
+    <span>Dekko</span>
+    — Encontre. Converse. Resolva.
+
+</footer>
+
+
+<!-- JavaScript principal da página -->
+<script src="../js/index.js?v=1"></script>
+
+<!-- Pesquisa de profissionais -->
+<script src="../js/pesquisar.js?v=1"></script>
+
+<!-- Favoritos -->
+<script src="../js/favoritos.js?v=1"></script>
+
+
+<!-- VLibras -->
+<div vw class="enabled">
+
+    <div
+        vw-access-button
+        class="active"
+    ></div>
+
+    <div vw-plugin-wrapper>
+
+        <div class="vw-plugin-top-wrapper"></div>
+
+    </div>
+
+</div>
+
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+<script>
+
+    new window.VLibras.Widget(
+        "https://vlibras.gov.br/app"
+    );
+
+</script>
+
+</body>
+
+</html>

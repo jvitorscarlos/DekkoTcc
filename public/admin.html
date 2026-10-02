@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Dekko - Painel Administrativo</title>
+
+<link rel="stylesheet" href="../css/admin.css">
+
+
+</head>
+
+<body>
+
+
+<header class="topo">
+
+    <div>
+        <h1>DEKKO</h1>
+        <span>Painel Administrativo</span>
+    </div>
+
+    <div class="admin-info">
+
+        <div class="admin-avatar">
+            A
+        </div>
+
+        <div>
+            <strong>Administrador</strong>
+            <small>admin@dekko.com</small>
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- BOAS-VINDAS -->
+
+    <section class="boas-vindas">
+
+        <h2>Visão geral</h2>
+
+        <p>
+            Gerencie as informações da plataforma Dekko.
+        </p>
+
+    </section>
+
+
+    <!-- CARDS -->
+
+    <section class="cards">
+
+        <div class="card">
+
+            <span class="icone">👥</span>
+
+            <div>
+                <p>Clientes</p>
+                <h3>128</h3>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <span class="icone">🧑‍🔧</span>
+
+            <div>
+                <p>Profissionais</p>
+                <h3>46</h3>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <span class="icone">💬</span>
+
+            <div>
+                <p>Conversas</p>
+                <h3>73</h3>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <span class="icone">⭐</span>
+
+            <div>
+                <p>Favoritos</p>
+                <h3>91</h3>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PESQUISA -->
+
+    <section class="filtros">
+
+        <input
+            type="text"
+            id="pesquisa"
+            placeholder="Pesquisar usuário..."
+            onkeyup="pesquisar()"
+        >
+
+        <select
+            id="regiao"
+            onchange="filtrarRegiao()"
+        >
+
+            <option value="">
+                Todas as regiões
+            </option>
+
+            <option value="Paracambi">
+                Paracambi
+            </option>
+
+            <option value="Seropédica">
+                Seropédica
+            </option>
+
+            <option value="Japeri">
+                Japeri
+            </option>
+
+            <option value="Queimados">
+                Queimados
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- CLIENTES -->
+
+    <section class="area">
+
+        <div class="titulo-area">
+
+            <div>
+
+                <h2>Clientes cadastrados</h2>
+
+                <p>
+                    Usuários que procuram por serviços.
+                </p>
+
+            </div>
+
+            <span class="contador">
+                128 clientes
+            </span>
+
+        </div>
+
+
+        <div class="tabela-container">
+
+            <table id="tabelaClientes">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Foto</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
+                        <th>Região</th>
+                        <th>Ações</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            <div class="foto">JC</div>
+                        </td>
+
+                        <td>João Carlos</td>
+
+                        <td>
+                            joao@gmail.com
+                        </td>
+
+                        <td>
+                            (21) 99999-1111
+                        </td>
+
+                        <td>
+                            Paracambi
+                        </td>
+
+                        <td class="acoes">
+
+                            <button onclick="visualizar('João Carlos')">
+                                👁
+                            </button>
+
+                            <button onclick="editar('João Carlos')">
+                                ✏️
+                            </button>
+
+                            <button onclick="excluir(this)">
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <div class="foto">MS</div>
+                        </td>
+
+                        <td>Maria Silva</td>
+
+                        <td>
+                            maria@gmail.com
+                        </td>
+
+                        <td>
+                            (21) 98888-2222
+                        </td>
+
+                        <td>
+                            Seropédica
+                        </td>
+
+                        <td class="acoes">
+
+                            <button onclick="visualizar('Maria Silva')">
+                                👁
+                            </button>
+
+                            <button onclick="editar('Maria Silva')">
+                                ✏️
+                            </button>
+
+                            <button onclick="excluir(this)">
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <div class="foto">LA</div>
+                        </td>
+
+                        <td>Lucas Almeida</td>
+
+                        <td>
+                            lucas@gmail.com
+                        </td>
+
+                        <td>
+                            (21) 97777-3333
+                        </td>
+
+                        <td>
+                            Japeri
+                        </td>
+
+                        <td class="acoes">
+
+                            <button onclick="visualizar('Lucas Almeida')">
+                                👁
+                            </button>
+
+                            <button onclick="editar('Lucas Almeida')">
+                                ✏️
+                            </button>
+
+                            <button onclick="excluir(this)">
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <div class="foto">AS</div>
+                        </td>
+
+                        <td>Ana Souza</td>
+
+                        <td>
+                            ana@gmail.com
+                        </td>
+
+                        <td>
+                            (21) 96666-4444
+                        </td>
+
+                        <td>
+                            Queimados
+                        </td>
+
+                        <td class="acoes">
+
+                            <button onclick="visualizar('Ana Souza')">
+                                👁
+                            </button>
+
+                            <button onclick="editar('Ana Souza')">
+                                ✏️
+                            </button>
+
+                            <button onclick="excluir(this)">
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROFISSIONAIS -->
+
+    <section class="area">
+
+        <div class="titulo-area">
+
+            <div>
+
+                <h2>Profissionais cadastrados</h2>
+
+                <p>
+                    Profissionais que oferecem serviços na plataforma.
+                </p>
+
+            </div>
+
+            <span class="contador">
+                46 profissionais
+            </span>
+
+        </div>
+
+
+        <div class="tabela-container">
+
+            <table id="tabelaProfissionais">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Foto</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
+                        <th>Região</th>
+                        <th>Serviço</th>
+                        <th>Ações</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            <div class="foto">RC</div>
+                        </td>
+
+                        <td>Rafael Costa</td>
+
+                        <td>
+                            rafael@gmail.com
+                        </td>
+
+                        <td>
+                            (21) 95555-1111
+                        </td>
+
+                        <td>
+                            Paracambi
+                        </td>
+
+                        <td>
+                            Fotografia
+                        </td>
+
+                        <td class="acoes">
+
+                            <button onclick="visualizar('Rafael Costa')">
+                                👁
+                            </button>
+
+                            <button onclick="editar('Rafael Costa')">
+                                ✏️
+                            </button>
+
+                            <button onclick="excluir(this)">
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <div class="foto">CM</div>
+                        </td>
+
+                        <td>Camila Martins</td>
+
+                        <td>
+                            camila@gmail.com
+                        </td>
+
+                        <td>
+                            (21) 94444-2222
+                        </td>
+
+                        <td>
+                            Seropédica
+                        </td>
+
+                        <td>
+                            Manicure
+                        </td>
+
+                        <td class="acoes">
+
+                            <button onclick="visualizar('Camila Martins')">
+                                👁
+                            </button>
+
+                            <button onclick="editar('Camila Martins')">
+                                ✏️
+                            </button>
+
+                            <button onclick="excluir(this)">
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <div class="foto">PB</div>
+                        </td>
+
+                        <td>Pedro Barbosa</td>
+
+                        <td>
+                            pedro@gmail.com
+                        </td>
+
+                        <td>
+                            (21) 93333-3333
+                        </td>
+
+                        <td>
+                            Japeri
+                        </td>
+
+                        <td>
+                            Eletricista
+                        </td>
+
+                        <td class="acoes">
+
+                            <button onclick="visualizar('Pedro Barbosa')">
+                                👁
+                            </button>
+
+                            <button onclick="editar('Pedro Barbosa')">
+                                ✏️
+                            </button>
+
+                            <button onclick="excluir(this)">
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <div class="foto">JS</div>
+                        </td>
+
+                        <td>Juliana Santos</td>
+
+                        <td>
+                            juliana@gmail.com
+                        </td>
+
+                        <td>
+                            juliana@gmail.com
+                        </td>
+
+                        <td>
+                            Queimados
+                        </td>
+
+                        <td>
+                            Cabeleireira
+                        </td>
+
+                        <td class="acoes">
+
+                            <button onclick="visualizar('Juliana Santos')">
+                                👁
+                            </button>
+
+                            <button onclick="editar('Juliana Santos')">
+                                ✏️
+                            </button>
+
+                            <button onclick="excluir(this)">
+                                🗑️
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONVERSAS -->
+
+    <section class="area">
+
+        <div class="titulo-area">
+
+            <div>
+
+                <h2>Conversas recentes</h2>
+
+                <p>
+                    Acompanhamento das conversas entre clientes e profissionais.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="conversas">
+
+            <div class="conversa">
+
+                <div class="foto">
+                    JC
+                </div>
+
+                <div class="conversa-info">
+
+                    <strong>
+                        João Carlos → Rafael Costa
+                    </strong>
+
+                    <span>
+                        Fotografia
+                    </span>
+
+                </div>
+
+                <span class="status andamento">
+                    Em andamento
+                </span>
+
+            </div>
+
+
+            <div class="conversa">
+
+                <div class="foto">
+                    MS
+                </div>
+
+                <div class="conversa-info">
+
+                    <strong>
+                        Maria Silva → Camila Martins
+                    </strong>
+
+                    <span>
+                        Manicure
+                    </span>
+
+                </div>
+
+                <span class="status encerrada">
+                    Encerrada
+                </span>
+
+            </div>
+
+
+            <div class="conversa">
+
+                <div class="foto">
+                    LA
+                </div>
+
+                <div class="conversa-info">
+
+                    <strong>
+                        Lucas Almeida → Pedro Barbosa
+                    </strong>
+
+                    <span>
+                        Eletricista
+                    </span>
+
+                </div>
+
+                <span class="status andamento">
+                    Em andamento
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ÁREA DE ATUAÇÃO -->
+
+    <section class="area">
+
+        <div class="titulo-area">
+
+            <div>
+
+                <h2>Área de atuação</h2>
+
+                <p>
+                    Atualmente a Dekko atende quatro municípios.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="regioes">
+
+            <div>
+                📍 Paracambi
+            </div>
+
+            <div>
+                📍 Seropédica
+            </div>
+
+            <div>
+                📍 Japeri
+            </div>
+
+            <div>
+                📍 Queimados
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        Dekko © 2026 — Painel Administrativo
+    </p>
+
+</footer>
+<script src="../js/admin.js?v=1"></script>
+
+
+</body>
+
+</html>
