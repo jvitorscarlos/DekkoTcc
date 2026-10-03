@@ -1,28 +1,14 @@
-/* ========================================= */
-/* DEKKO - PERFIL.JS                        */
-/* Exibição do perfil do profissional       */
-/* ========================================= */
-
-
-/* ========================================= */
-/* CARREGAR PERFIL                          */
-/* ========================================= */
-
 function carregarPerfil() {
 
     let areaPerfil =
-        document.getElementById(
-            "perfilProfissional"
-        );
+        document.getElementById("perfilProfissional");
 
     if (!areaPerfil) {
         return;
     }
 
     let parametros =
-        new URLSearchParams(
-            window.location.search
-        );
+        new URLSearchParams(window.location.search);
 
     let id =
         parametros.get("id");
@@ -31,9 +17,7 @@ function carregarPerfil() {
 
         areaPerfil.innerHTML = `
             <div class="perfil-instagram">
-
                 <div class="perfil-erro">
-
                     <h2>
                         Perfil não informado
                     </h2>
@@ -42,14 +26,17 @@ function carregarPerfil() {
                         Selecione um profissional
                         para visualizar o perfil.
                     </p>
-
                 </div>
-
             </div>
         `;
 
         return;
     }
+
+
+    /* ========================================= */
+    /* BUSCAR PROFISSIONAL                       */
+    /* ========================================= */
 
     fetch(
         "../routes/profissional.php?acao=buscar&id=" +
@@ -69,7 +56,6 @@ function carregarPerfil() {
 
                 areaPerfil.innerHTML = `
                     <div class="perfil-instagram">
-
                         <div class="perfil-erro">
 
                             <h2>
@@ -82,20 +68,20 @@ function carregarPerfil() {
                             </p>
 
                         </div>
-
                     </div>
                 `;
 
                 return;
             }
 
+
             let profissional =
                 dados.profissional;
 
 
-            /* ================================= */
-            /* FOTO DE PERFIL                    */
-            /* ================================= */
+            /* ========================================= */
+            /* FOTO DE PERFIL                            */
+            /* ========================================= */
 
             let fotoPerfil =
                 profissional.foto;
@@ -104,9 +90,17 @@ function carregarPerfil() {
 
             if (fotoPerfil) {
 
+                let caminhoFoto =
+                    fotoPerfil;
+
+                if (!caminhoFoto.startsWith("../")) {
+                    caminhoFoto =
+                        "../" + caminhoFoto;
+                }
+
                 avatarHTML = `
                     <img
-                        src="${fotoPerfil}"
+                        src="${caminhoFoto}"
                         alt="Foto de ${profissional.nome}"
                     >
                 `;
@@ -128,9 +122,9 @@ function carregarPerfil() {
             }
 
 
-            /* ================================= */
-            /* REDE SOCIAL                       */
-            /* ================================= */
+            /* ========================================= */
+            /* REDE SOCIAL                               */
+            /* ========================================= */
 
             let redeSocialHTML = "";
 
@@ -156,192 +150,228 @@ function carregarPerfil() {
             }
 
 
-            /* ================================= */
-            /* PORTFÓLIO                         */
-            /* ================================= */
+            /* ========================================= */
+            /* BUSCAR PORTFÓLIO DO PROFISSIONAL          */
+            /* ========================================= */
 
-            let portfolioHTML = `
+            return fetch(
+                "../routes/portfolio.php?acao=listarPorId&id=" +
+                id
+            )
 
-                <div class="galeria-portfolio">
+                .then(function (respostaPortfolio) {
+                    return respostaPortfolio.json();
+                })
 
-                    <div class="portfolio-vazio">
+                .then(function (dadosPortfolio) {
 
-                        <span>
-                            📸
-                        </span>
+                    let fotosPortfolio = [];
 
-                        <h3>
-                            Portfólio vazio
-                        </h3>
+                    if (
+                        dadosPortfolio.sucesso &&
+                        Array.isArray(dadosPortfolio.fotos)
+                    ) {
 
-                        <p>
-                            Este profissional ainda
-                            não adicionou fotos.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            `;
+                        fotosPortfolio =
+                            dadosPortfolio.fotos;
+                    }
 
 
-            if (
-                profissional.portfolio &&
-                Array.isArray(profissional.portfolio) &&
-                profissional.portfolio.length > 0
-            ) {
+                    /* ========================================= */
+                    /* MONTAR PORTFÓLIO                           */
+                    /* ========================================= */
 
-                portfolioHTML = `
+                    let portfolioHTML = `
+                        <div class="galeria-portfolio">
 
-                    <div class="galeria-portfolio">
+                            <div class="portfolio-vazio">
 
-                        ${
-                            profissional.portfolio
-                                .slice(0, 6)
-                                .map(function (foto, indice) {
+                                <span>
+                                    📸
+                                </span>
 
-                                    return `
+                                <h3>
+                                    Portfólio vazio
+                                </h3>
 
-                                        <div class="foto-portfolio">
+                                <p>
+                                    Este profissional ainda
+                                    não adicionou fotos.
+                                </p>
 
-                                            <img
-                                                src="${foto}"
-                                                alt="Trabalho ${
-                                                    indice + 1
-                                                } de ${
-                                                    profissional.nome
-                                                }"
-                                            >
-
-                                        </div>
-
-                                    `;
-
-                                })
-                                .join("")
-                        }
-
-                    </div>
-
-                `;
-            }
-
-
-            /* ================================= */
-            /* PERFIL COMPLETO                   */
-            /* ================================= */
-
-            areaPerfil.innerHTML = `
-
-                <div class="perfil-instagram">
-
-
-                    <!-- CABEÇALHO -->
-
-                    <div class="perfil-cabecalho">
-
-                        <div class="perfil-avatar">
-
-                            ${avatarHTML}
+                            </div>
 
                         </div>
+                    `;
 
 
-                        <div class="perfil-dados">
+                    if (fotosPortfolio.length > 0) {
 
-                            <h1>
-                                ${profissional.nome}
-                            </h1>
-
-                            <p class="perfil-servico">
+                        portfolioHTML = `
+                            <div class="galeria-portfolio">
 
                                 ${
-                                    profissional.servico ||
-                                    "Profissional"
+                                    fotosPortfolio
+                                        .slice(0, 6)
+                                        .map(function (
+                                            foto,
+                                            indice
+                                        ) {
+
+                                            let caminhoFoto =
+                                                foto.foto ||
+                                                foto;
+
+                                            if (
+                                                !caminhoFoto.startsWith("../")
+                                            ) {
+                                                caminhoFoto =
+                                                    "../" +
+                                                    caminhoFoto;
+                                            }
+
+                                            return `
+                                                <div class="foto-portfolio">
+
+                                                    <img
+                                                        src="${caminhoFoto}"
+                                                        alt="Trabalho ${
+                                                            indice + 1
+                                                        } de ${
+                                                            profissional.nome
+                                                        }"
+                                                    >
+
+                                                </div>
+                                            `;
+
+                                        })
+                                        .join("")
                                 }
 
-                            </p>
-
-                            <p class="perfil-regiao">
-
-                                📍
-
-                                ${
-                                    profissional.regiao ||
-                                    "Região não informada"
-                                }
-
-                            </p>
+                            </div>
+                        `;
+                    }
 
 
-                            <button
-                                class="btn-conversar"
-                                type="button"
-                                onclick="iniciarConversa(
-                                    ${profissional.id_profissional}
-                                )"
-                            >
-                                💬 Conversar
-                            </button>
+                    /* ========================================= */
+                    /* PERFIL COMPLETO                           */
+                    /* ========================================= */
+
+                    areaPerfil.innerHTML = `
+
+                        <div class="perfil-instagram">
+
+
+                            <!-- CABEÇALHO -->
+
+                            <div class="perfil-cabecalho">
+
+                                <div class="perfil-avatar">
+                                    ${avatarHTML}
+                                </div>
+
+
+                                <div class="perfil-dados">
+
+                                    <h1>
+                                        ${profissional.nome}
+                                    </h1>
+
+
+                                    <p class="perfil-servico">
+
+                                        ${
+                                            profissional.servico ||
+                                            "Profissional"
+                                        }
+
+                                    </p>
+
+
+                                    <p class="perfil-regiao">
+
+                                        📍
+
+                                        ${
+                                            profissional.regiao ||
+                                            "Região não informada"
+                                        }
+
+                                    </p>
+
+
+                                    <button
+                                        class="btn-conversar"
+                                        type="button"
+                                        onclick="iniciarConversa(
+                                            ${profissional.id_profissional}
+                                        )"
+                                    >
+                                        💬 Conversar
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- BIO -->
+
+                            <div class="perfil-bio">
+
+                                <h3>
+                                    Sobre mim
+                                </h3>
+
+                                <p>
+
+                                    ${
+                                        profissional.biografia ||
+                                        "Este profissional ainda não adicionou uma biografia."
+                                    }
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- REDE SOCIAL -->
+
+                            ${redeSocialHTML}
+
+
+                            <div class="perfil-divisoria">
+                            </div>
+
+
+                            <!-- PORTFÓLIO -->
+
+                            <div class="perfil-publicacoes">
+
+                                <div class="titulo-portfolio">
+
+                                    <h2>
+                                        Portfólio
+                                    </h2>
+
+                                    <span>
+                                        Trabalhos e projetos
+                                    </span>
+
+                                </div>
+
+                                ${portfolioHTML}
+
+                            </div>
+
 
                         </div>
 
-                    </div>
+                    `;
 
+                });
 
-                    <!-- BIO -->
-
-                    <div class="perfil-bio">
-
-                        <h3>
-                            Sobre mim
-                        </h3>
-
-                        <p>
-
-                            ${
-                                profissional.descricao ||
-                                "Este profissional ainda não adicionou uma biografia."
-                            }
-
-                        </p>
-
-                    </div>
-
-
-                    <!-- REDE SOCIAL -->
-
-                    ${redeSocialHTML}
-
-
-                    <div class="perfil-divisoria">
-                    </div>
-
-
-                    <!-- PORTFÓLIO -->
-
-                    <div class="perfil-publicacoes">
-
-                        <div class="titulo-portfolio">
-
-                            <h2>
-                                Portfólio
-                            </h2>
-
-                            <span>
-                                Trabalhos e projetos
-                            </span>
-
-                        </div>
-
-                        ${portfolioHTML}
-
-                    </div>
-
-                </div>
-
-            `;
         })
 
         .catch(function (erro) {
@@ -352,7 +382,6 @@ function carregarPerfil() {
             );
 
             areaPerfil.innerHTML = `
-
                 <div class="perfil-instagram">
 
                     <div class="perfil-erro">
@@ -369,20 +398,84 @@ function carregarPerfil() {
                     </div>
 
                 </div>
-
             `;
         });
 }
 
 
 /* ========================================= */
-/* INICIAR CONVERSA                         */
+/* INICIAR CONVERSA                          */
 /* ========================================= */
 
 function iniciarConversa(id) {
 
-    window.location.href =
-        "mensagens.html?id=" + id;
+    if (!id) {
+
+        alert(
+            "Profissional não informado."
+        );
+
+        return;
+    }
+
+
+    const dados =
+        new FormData();
+
+    dados.append(
+        "id_profissional",
+        id
+    );
+
+
+    fetch(
+        "../routes/conversa.php?acao=criar",
+        {
+            method: "POST",
+            body: dados
+        }
+    )
+
+        .then(function (resposta) {
+            return resposta.json();
+        })
+
+        .then(function (resultado) {
+
+            console.log(
+                "Resposta criar conversa:",
+                resultado
+            );
+
+
+            if (!resultado.sucesso) {
+
+                alert(
+                    resultado.mensagem
+                );
+
+                return;
+            }
+
+
+            window.location.href =
+                "mensagens.html?id_conversa=" +
+                resultado.id_conversa;
+
+        })
+
+        .catch(function (erro) {
+
+            console.log(
+                "Erro ao iniciar conversa:",
+                erro
+            );
+
+            alert(
+                "Não foi possível iniciar a conversa."
+            );
+
+        });
 }
 
 
@@ -391,90 +484,3 @@ function iniciarConversa(id) {
 /* ========================================= */
 
 carregarPerfil();
-const exemplos = [
-    {
-        emoji: "🔌",
-        nome: "Instalação de tomadas",
-        cor1: "#ffb900",
-        cor2: "#ff9f00"
-    },
-    {
-        emoji: "💡",
-        nome: "Troca de iluminação",
-        cor1: "#ffd43b",
-        cor2: "#ffb900"
-    },
-    {
-        emoji: "⚡",
-        nome: "Quadro de energia",
-        cor1: "#222222",
-        cor2: "#111111"
-    },
-    {
-        emoji: "🔦",
-        nome: "Iluminação externa",
-        cor1: "#ff9f00",
-        cor2: "#e68a00"
-    },
-    {
-        emoji: "🏠",
-        nome: "Instalação residencial",
-        cor1: "#333333",
-        cor2: "#1a1a1a"
-    },
-    {
-        emoji: "🛠️",
-        nome: "Manutenção elétrica",
-        cor1: "#ffc933",
-        cor2: "#ffb900"
-    }
-];
-
-function criarExemplo(n) {
-    const e = exemplos[n - 1];
-
-    if (!e) {
-        return "";
-    }
-
-    const escuro =
-        e.cor1 === "#222222" ||
-        e.cor1 === "#333333";
-
-    const textoCor = escuro ? "#ffb900" : "#111111";
-
-    const svg =
-        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">' +
-        '<defs>' +
-        '<linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
-        '<stop offset="0" stop-color="' + e.cor1 + '"/>' +
-        '<stop offset="1" stop-color="' + e.cor2 + '"/>' +
-        '</linearGradient>' +
-        '</defs>' +
-        '<rect width="400" height="400" fill="url(#g)"/>' +
-        '<text x="200" y="215" font-size="130" text-anchor="middle">' +
-        e.emoji +
-        '</text>' +
-        '<text x="200" y="330" font-size="26" font-family="Arial, sans-serif" font-weight="bold" text-anchor="middle" fill="' +
-        textoCor +
-        '">' +
-        e.nome +
-        '</text>' +
-        '</svg>';
-
-    return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
-}
-
-document
-    .querySelectorAll(".foto-portfolio img")
-    .forEach(function (img) {
-
-        img.addEventListener("error", function () {
-            img.onerror = null;
-            img.src = criarExemplo(Number(img.dataset.n));
-        });
-
-        if (img.complete && img.naturalWidth === 0) {
-            img.src = criarExemplo(Number(img.dataset.n));
-        }
-    });

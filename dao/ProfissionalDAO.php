@@ -12,79 +12,144 @@ class ProfissionalDAO
         $this->conexao = Database::getConexao();
     }
 
-    public function cadastrar(Profissional $profissional, $servico)
+    /*
+    =========================================
+    CADASTRAR PROFISSIONAL
+    =========================================
+    */
+
+    public function cadastrar(Profissional $profissional, $servicos)
     {
         try {
 
             $this->conexao->beginTransaction();
 
-            // 1. Cadastra o profissional
+            /*
+            =========================================
+            1. CADASTRA O PROFISSIONAL
+            =========================================
+            */
 
             $sql = "INSERT INTO profissional
-                    (nome, email, senha, telefone, endereco, regiao, experiencia, descricao, foto)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    (
+                        nome,
+                        email,
+                        telefone,
+                        senha,
+                        endereco,
+                        foto,
+                        biografia,
+                        id_regiao
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             $stmt = $this->conexao->prepare($sql);
 
             $stmt->execute([
                 $profissional->getNome(),
                 $profissional->getEmail(),
-                $profissional->getSenha(),
                 $profissional->getTelefone(),
+                $profissional->getSenha(),
                 $profissional->getEndereco(),
-                $profissional->getRegiao(),
-                $profissional->getExperiencia(),
-                $profissional->getDescricao(),
-                $profissional->getFoto()
+                $profissional->getFoto(),
+                $profissional->getBiografia(),
+                $profissional->getIdRegiao()
             ]);
-
-            // 2. Pega o ID do profissional
 
             $profissionalId = $this->conexao->lastInsertId();
 
-            // 3. Procura o serviço
 
-            $sql = "SELECT id_servico
-                    FROM servico
-                    WHERE nome = ?";
+            /*
+            =========================================
+            2. CADASTRA OS SERVIÇOS
+            =========================================
+            */
 
-            $stmt = $this->conexao->prepare($sql);
+            foreach ($servicos as $servico) {
 
-            $stmt->execute([$servico]);
+                $servico = trim($servico);
 
-            $servicoExistente = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($servico === "") {
+                    continue;
+                }
 
-            // 4. Se o serviço não existir, cadastra
 
-            if (!$servicoExistente) {
+                /*
+                Procura se o serviço já existe.
+                */
 
-                $sql = "INSERT INTO servico (nome)
-                        VALUES (?)";
+                $sql = "SELECT id_servico
+                        FROM servico
+                        WHERE nome = ?";
 
                 $stmt = $this->conexao->prepare($sql);
-
                 $stmt->execute([$servico]);
 
-                $servicoId = $this->conexao->lastInsertId();
+                $servicoExistente =
+                    $stmt->fetch(PDO::FETCH_ASSOC);
 
-            } else {
 
-                $servicoId = $servicoExistente["id_servico"];
+                /*
+                Se não existir, cria.
+                */
 
+                if (!$servicoExistente) {
+
+                    $sql = "INSERT INTO servico
+                            (
+                                nome,
+                                descricao,
+                                categoria
+                            )
+                            VALUES (?, ?, ?)";
+
+                    $stmt =
+                        $this->conexao->prepare($sql);
+
+                    $stmt->execute([
+                        $servico,
+                        null,
+                        "Outros"
+                    ]);
+
+                    $servicoId =
+                        $this->conexao->lastInsertId();
+
+                } else {
+
+                    $servicoId =
+                        $servicoExistente["id_servico"];
+                }
+
+
+                /*
+                =========================================
+                3. LIGA PROFISSIONAL AO SERVIÇO
+                =========================================
+                */
+
+                $sql = "INSERT INTO profissional_servico
+                        (
+                            id_profissional,
+                            id_servico
+                        )
+                        VALUES (?, ?)";
+
+                $stmt =
+                    $this->conexao->prepare($sql);
+
+                $stmt->execute([
+                    $profissionalId,
+                    $servicoId
+                ]);
             }
 
-            // 5. Liga profissional ao serviço
 
-            $sql = "INSERT INTO especialidade
-                    (profissional_id, servico_id)
-                    VALUES (?, ?)";
-
-            $stmt = $this->conexao->prepare($sql);
-
-            $stmt->execute([
-                $profissionalId,
-                $servicoId
-            ]);
+            /*
+            =========================================
+            4. FINALIZA
+            =========================================
+            */
 
             $this->conexao->commit();
 
@@ -92,56 +157,41 @@ class ProfissionalDAO
 
         } catch (Exception $e) {
 
-            $this->conexao->rollBack();
+            if ($this->conexao->inTransaction()) {
+                $this->conexao->rollBack();
+            }
 
             return false;
         }
     }
 
 
-    public function listarTodos($servico = "", $regiao = "")
+    /*
+    =========================================
+    BUSCAR POR EMAIL
+    =========================================
+    */
+
+    public function buscarPorEmail($email)
     {
-        $sql = "SELECT
-                    p.id_profissional,
-                    p.nome,
-                    p.email,
-                    p.telefone,
-                    p.endereco,
-                    p.regiao,
-                    p.experiencia,
-                    p.descricao,
-                    p.foto,
-                    s.nome AS servico
-                FROM profissional p
-                LEFT JOIN especialidade e
-                    ON p.id_profissional = e.profissional_id
-                LEFT JOIN servico s
-                    ON e.servico_id = s.id_servico
-                WHERE 1=1";
+        $sql = "SELECT *
+                FROM profissional
+                WHERE email = ?";
 
-        $parametros = [];
+        $stmt =
+            $this->conexao->prepare($sql);
 
-        if (!empty($servico)) {
+        $stmt->execute([$email]);
 
-            $sql .= " AND s.nome LIKE ?";
-
-            $parametros[] = "%" . $servico . "%";
-        }
-
-        if (!empty($regiao)) {
-
-            $sql .= " AND p.regiao = ?";
-
-            $parametros[] = $regiao;
-        }
-
-        $stmt = $this->conexao->prepare($sql);
-
-        $stmt->execute($parametros);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+
+    /*
+    =========================================
+    BUSCAR PROFISSIONAL POR ID
+    =========================================
+    */
 
     public function buscarPorId($id)
     {
@@ -151,22 +201,165 @@ class ProfissionalDAO
                     p.email,
                     p.telefone,
                     p.endereco,
-                    p.regiao,
-                    p.experiencia,
-                    p.descricao,
                     p.foto,
-                    s.nome AS servico
-                FROM profissional p
-                LEFT JOIN especialidade e
-                    ON p.id_profissional = e.profissional_id
-                LEFT JOIN servico s
-                    ON e.servico_id = s.id_servico
-                WHERE p.id_profissional = ?";
+                    p.biografia,
+                    p.id_regiao,
+                    r.nome AS regiao,
+                    GROUP_CONCAT(
+                        s.nome
+                        SEPARATOR ', '
+                    ) AS servico
 
-        $stmt = $this->conexao->prepare($sql);
+                FROM profissional p
+
+                LEFT JOIN regiao r
+                    ON p.id_regiao = r.id_regiao
+
+                LEFT JOIN profissional_servico ps
+                    ON p.id_profissional =
+                       ps.id_profissional
+
+                LEFT JOIN servico s
+                    ON ps.id_servico =
+                       s.id_servico
+
+                WHERE p.id_profissional = ?
+
+                GROUP BY p.id_profissional";
+
+        $stmt =
+            $this->conexao->prepare($sql);
 
         $stmt->execute([$id]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    /*
+    =========================================
+    LISTAR PROFISSIONAIS
+    =========================================
+    */
+
+    public function listarTodos(
+        $servico = "",
+        $regiao = ""
+    ) {
+
+        $sql = "SELECT
+                    p.id_profissional,
+                    p.nome,
+                    p.email,
+                    p.telefone,
+                    p.endereco,
+                    p.foto,
+                    p.biografia,
+                    p.id_regiao,
+                    r.nome AS regiao,
+                    GROUP_CONCAT(
+                        s.nome
+                        SEPARATOR ', '
+                    ) AS servico
+
+                FROM profissional p
+
+                LEFT JOIN regiao r
+                    ON p.id_regiao =
+                       r.id_regiao
+
+                LEFT JOIN profissional_servico ps
+                    ON p.id_profissional =
+                       ps.id_profissional
+
+                LEFT JOIN servico s
+                    ON ps.id_servico =
+                       s.id_servico
+
+                WHERE 1 = 1";
+
+        $parametros = [];
+
+
+        /*
+        =========================================
+        FILTRO POR SERVIÇO
+        =========================================
+        */
+
+        if (!empty($servico)) {
+
+            $sql .= " AND s.nome LIKE ?";
+
+            $parametros[] =
+                "%" . $servico . "%";
+        }
+
+
+        /*
+        =========================================
+        FILTRO POR REGIÃO
+        =========================================
+        */
+
+        if (!empty($regiao)) {
+
+            $sql .= " AND r.nome = ?";
+
+            $parametros[] =
+                $regiao;
+        }
+
+
+        $sql .= " GROUP BY p.id_profissional";
+
+
+        $stmt =
+            $this->conexao->prepare($sql);
+
+        $stmt->execute($parametros);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /*
+    =========================================
+    ATUALIZAR PERFIL
+    =========================================
+    */
+
+    public function atualizarPerfil(
+        $idProfissional,
+        $nome,
+        $telefone,
+        $endereco,
+        $biografia,
+        $idRegiao,
+        $foto
+    ) {
+
+        $sql = "UPDATE profissional
+                SET nome = ?,
+                    telefone = ?,
+                    endereco = ?,
+                    biografia = ?,
+                    id_regiao = ?,
+                    foto = ?,
+                    perfil_completo = 1
+                WHERE id_profissional = ?";
+
+        $stmt =
+            $this->conexao->prepare($sql);
+
+        return $stmt->execute([
+            $nome,
+            $telefone,
+            $endereco,
+            $biografia,
+            $idRegiao,
+            $foto,
+            $idProfissional
+        ]);
     }
 }

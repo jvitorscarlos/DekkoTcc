@@ -82,8 +82,7 @@
 
 
         <div class="imagem">
-            <img
-                src="dekin.jpg"
+            <img src="../img/dekin.jpg" alt="Dekkinho">
                 alt="Dekkinho, mascote da Dekko"
             >
         </div>
@@ -321,67 +320,184 @@
 
 
     <!-- LOGIN -->
-    <div class="modal" id="login">
+   
+<div class="modal" id="login">
+    <div class="caixa">
 
-        <div class="caixa">
+        <button
+            class="fechar"
+            type="button"
+            onclick="fechar()"
+        >
+            ×
+        </button>
 
-            <button
-                class="fechar"
-                type="button"
-                onclick="fechar()"
+        <h2>Entrar na Dekko</h2>
+
+        <p>
+            Como você deseja entrar?
+        </p>
+
+        <div class="escolha">
+
+            <!-- CLIENTE -->
+            <div
+                class="tipo"
+                onclick="abrirLoginCliente()"
             >
-                ×
-            </button>
+                <div class="emoji">👤</div>
 
-            <h2>Entrar na Dekko</h2>
+                <h3>Cliente</h3>
 
-            <p>
-                O mesmo login serve para clientes
-                e profissionais.
-            </p>
+                <p>
+                    Quero encontrar profissionais
+                </p>
+            </div>
 
-            <form onsubmit="fazerLogin(event)">
+            <!-- PROFISSIONAL -->
+            <div
+                class="tipo"
+                onclick="abrirLoginProfissional()"
+            >
+                <div class="emoji">🧑‍🔧</div>
 
-                <div class="campo">
+                <h3>Profissional</h3>
 
-                    <label>E-mail</label>
-
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Digite seu e-mail"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label>Senha</label>
-
-                    <input
-                        type="password"
-                        name="senha"
-                        placeholder="Digite sua senha"
-                        required
-                    >
-
-                </div>
-
-
-                <button
-                    class="btn-form"
-                    type="submit"
-                >
-                    Entrar
-                </button>
-
-            </form>
+                <p>
+                    Quero receber clientes
+                </p>
+            </div>
 
         </div>
 
     </div>
+</div>
+
+
+<!-- LOGIN CLIENTE -->
+<div class="modal" id="loginCliente">
+    <div class="caixa">
+
+        <button
+            class="fechar"
+            type="button"
+            onclick="fechar()"
+        >
+            ×
+        </button>
+
+        <h2>Entrar como cliente</h2>
+
+        <p>
+            Acesse sua conta para encontrar profissionais.
+        </p>
+
+        <form onsubmit="fazerLoginCliente(event)">
+
+            <div class="campo">
+                <label>E-mail</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Digite seu e-mail"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label>Senha</label>
+
+                <input
+                    type="password"
+                    name="senha"
+                    placeholder="Digite sua senha"
+                    required
+                >
+            </div>
+
+            <button
+                class="btn-form"
+                type="submit"
+            >
+                Entrar
+            </button>
+
+        </form>
+
+        <button
+            class="voltar"
+            type="button"
+            onclick="abrirLogin()"
+        >
+            ← Voltar
+        </button>
+
+    </div>
+</div>
+
+
+<!-- LOGIN PROFISSIONAL -->
+<div class="modal" id="loginProfissional">
+    <div class="caixa">
+
+        <button
+            class="fechar"
+            type="button"
+            onclick="fechar()"
+        >
+            ×
+        </button>
+
+        <h2>Entrar como profissional</h2>
+
+        <p>
+            Acesse sua conta para receber clientes.
+        </p>
+
+        <form onsubmit="fazerLoginProfissional(event)">
+
+            <div class="campo">
+                <label>E-mail</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Digite seu e-mail"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label>Senha</label>
+
+                <input
+                    type="password"
+                    name="senha"
+                    placeholder="Digite sua senha"
+                    required
+                >
+            </div>
+
+            <button
+                class="btn-form"
+                type="submit"
+            >
+                Entrar
+            </button>
+
+        </form>
+
+        <button
+            class="voltar"
+            type="button"
+            onclick="abrirLogin()"
+        >
+            ← Voltar
+        </button>
+
+    </div>
+</div>
 
 
     <!-- ESCOLHA DO CADASTRO -->

@@ -9,13 +9,11 @@
 /* ========================================= */
 
 function fechar() {
-
     document
         .querySelectorAll(".modal")
         .forEach(function (modal) {
             modal.classList.remove("ativo");
         });
-
 }
 
 
@@ -24,7 +22,6 @@ function fechar() {
 /* ========================================= */
 
 function abrirLogin() {
-
     fechar();
 
     let login = document.getElementById("login");
@@ -32,7 +29,6 @@ function abrirLogin() {
     if (login) {
         login.classList.add("ativo");
     }
-
 }
 
 
@@ -41,7 +37,6 @@ function abrirLogin() {
 /* ========================================= */
 
 function abrirCadastro() {
-
     fechar();
 
     let cadastro = document.getElementById("cadastro");
@@ -49,7 +44,6 @@ function abrirCadastro() {
     if (cadastro) {
         cadastro.classList.add("ativo");
     }
-
 }
 
 
@@ -58,7 +52,6 @@ function abrirCadastro() {
 /* ========================================= */
 
 function abrirCliente() {
-
     fechar();
 
     let cliente = document.getElementById("cliente");
@@ -66,7 +59,6 @@ function abrirCliente() {
     if (cliente) {
         cliente.classList.add("ativo");
     }
-
 }
 
 
@@ -75,7 +67,6 @@ function abrirCliente() {
 /* ========================================= */
 
 function abrirProfissional() {
-
     fechar();
 
     let profissional =
@@ -84,7 +75,6 @@ function abrirProfissional() {
     if (profissional) {
         profissional.classList.add("ativo");
     }
-
 }
 
 
@@ -93,7 +83,6 @@ function abrirProfissional() {
 /* ========================================= */
 
 function verificarOutroServico() {
-
     let checkboxOutro =
         document.getElementById("checkboxOutro");
 
@@ -108,45 +97,73 @@ function verificarOutroServico() {
     }
 
     if (checkboxOutro.checked) {
-
         outro.classList.add("ativo");
         campo.required = true;
-
     } else {
-
         outro.classList.remove("ativo");
         campo.required = false;
         campo.value = "";
-
     }
-
 }
 
 
 /* ========================================= */
-/* LOGIN                                     */
+/* ABRIR LOGIN DE CLIENTE                    */
 /* ========================================= */
 
-function fazerLogin(event) {
+function abrirLoginCliente() {
+    fechar();
 
+    let loginCliente =
+        document.getElementById("loginCliente");
+
+    if (loginCliente) {
+        loginCliente.classList.add("ativo");
+    }
+}
+
+
+/* ========================================= */
+/* ABRIR LOGIN DE PROFISSIONAL               */
+/* ========================================= */
+
+function abrirLoginProfissional() {
+    fechar();
+
+    let loginProfissional =
+        document.getElementById("loginProfissional");
+
+    if (loginProfissional) {
+        loginProfissional.classList.add("ativo");
+    }
+}
+
+
+/* ========================================= */
+/* LOGIN DO CLIENTE                          */
+/* ========================================= */
+
+function fazerLoginCliente(event) {
     event.preventDefault();
 
     let form = event.target;
 
-    fetch("../routes/cliente.php?acao=login", {
-        method: "POST",
-        body: new FormData(form)
-    })
-
+    fetch(
+        "../routes/cliente.php?acao=login",
+        {
+            method: "POST",
+            body: new FormData(form)
+        }
+    )
         .then(function (resposta) {
-
             return resposta.json();
-
         })
-
         .then(function (dados) {
 
-            console.log("Resposta do login:", dados);
+            console.log(
+                "Resposta login cliente:",
+                dados
+            );
 
             alert(dados.mensagem);
 
@@ -155,71 +172,104 @@ function fazerLogin(event) {
             }
 
             form.reset();
-
             fechar();
 
-
-            /* ========================================= */
-            /* VERIFICAR PERFIL DO CLIENTE               */
-            /* ========================================= */
+            /* CLIENTE NOVO */
 
             if (
-                !dados.cliente ||
-                typeof dados.cliente.perfil_completo === "undefined"
+                Number(
+                    dados.cliente.perfil_completo
+                ) === 0
             ) {
-
-                console.log(
-                    "O servidor não enviou perfil_completo."
-                );
-
-                alert(
-                    "O login funcionou, mas o servidor não informou o status do perfil."
-                );
-
-                return;
-            }
-
-
-            console.log(
-                "perfil_completo:",
-                dados.cliente.perfil_completo
-            );
-
-
-            /* ========================================= */
-            /* CLIENTE NOVO                              */
-            /* ========================================= */
-
-            if (
-                Number(dados.cliente.perfil_completo) === 0
-            ) {
-
                 window.location.href =
                     "criar-perfil-cli.html";
 
                 return;
             }
 
-
-            /* ========================================= */
-            /* CLIENTE COM PERFIL COMPLETO               */
-            /* ========================================= */
+            /* CLIENTE HABITUADO */
 
             window.location.href =
                 "pesquisar.html";
-
         })
-
         .catch(function (erro) {
 
-            console.log("Erro no login:", erro);
+            console.log(
+                "Erro no login do cliente:",
+                erro
+            );
 
             alert(
                 "Erro ao conectar com o servidor. Veja o Console (F12)."
             );
-
         });
+}
 
+
+/* ========================================= */
+/* LOGIN DO PROFISSIONAL                     */
+/* ========================================= */
+
+function fazerLoginProfissional(event) {
+    event.preventDefault();
+
+    let form = event.target;
+
+    fetch(
+        "../routes/profissional.php?acao=login",
+        {
+            method: "POST",
+            body: new FormData(form)
+        }
+    )
+        .then(function (resposta) {
+            return resposta.json();
+        })
+        .then(function (dados) {
+
+            console.log(
+                "Resposta login profissional:",
+                dados
+            );
+
+            alert(dados.mensagem);
+
+            if (!dados.sucesso) {
+                return;
+            }
+
+            form.reset();
+            fechar();
+
+            /* PROFISSIONAL NOVO */
+
+            if (
+                Number(
+                    dados.profissional.perfil_completo
+                ) === 0
+            ) {
+                window.location.href =
+                    "criar-perfil-pro.html";
+
+                return;
+            }
+
+            /* PROFISSIONAL HABITUADO */
+
+            window.location.href =
+                "mensagens.html";
+        })
+        .catch(function (erro) {
+
+            console.log(
+                "Erro no login profissional:",
+                erro
+            );
+
+            alert(
+                "Erro ao conectar com o servidor. Veja o Console (F12)."
+            );
+        });
 }
 
 
@@ -228,23 +278,26 @@ function fazerLogin(event) {
 /* ========================================= */
 
 function cadastrarCliente(event) {
-
     event.preventDefault();
 
     let form = event.target;
 
-    fetch("../routes/cliente.php?acao=cadastrar", {
-        method: "POST",
-        body: new FormData(form)
-    })
-
+    fetch(
+        "../routes/cliente.php?acao=cadastrar",
+        {
+            method: "POST",
+            body: new FormData(form)
+        }
+    )
         .then(function (resposta) {
-
             return resposta.json();
-
         })
-
         .then(function (dados) {
+
+            console.log(
+                "Resposta cadastro cliente:",
+                dados
+            );
 
             alert(dados.mensagem);
 
@@ -254,20 +307,24 @@ function cadastrarCliente(event) {
 
                 fechar();
 
+                alert(
+                    "Conta criada! Agora faça login para continuar."
+                );
+
+                abrirLogin();
             }
-
         })
-
         .catch(function (erro) {
 
-            console.log(erro);
+            console.log(
+                "Erro no cadastro do cliente:",
+                erro
+            );
 
             alert(
                 "Erro ao conectar com o servidor. Veja o Console (F12)."
             );
-
         });
-
 }
 
 
@@ -276,7 +333,6 @@ function cadastrarCliente(event) {
 /* ========================================= */
 
 function cadastrarProfissional(event) {
-
     event.preventDefault();
 
     let form = event.target;
@@ -288,18 +344,18 @@ function cadastrarProfissional(event) {
 
     if (servicos.length === 0) {
 
-        alert("Selecione pelo menos um serviço.");
+        alert(
+            "Selecione pelo menos um serviço."
+        );
 
         return;
     }
-
 
     let checkboxOutro =
         document.getElementById("checkboxOutro");
 
     let outroServico =
         document.getElementById("outroServico");
-
 
     if (
         checkboxOutro &&
@@ -308,13 +364,14 @@ function cadastrarProfissional(event) {
         outroServico.value.trim() === ""
     ) {
 
-        alert("Digite qual é o outro serviço.");
+        alert(
+            "Digite qual é o outro serviço."
+        );
 
         outroServico.focus();
 
         return;
     }
-
 
     fetch(
         "../routes/profissional.php?acao=cadastrar",
@@ -323,14 +380,15 @@ function cadastrarProfissional(event) {
             body: new FormData(form)
         }
     )
-
         .then(function (resposta) {
-
             return resposta.json();
-
         })
-
         .then(function (dados) {
+
+            console.log(
+                "Resposta cadastro profissional:",
+                dados
+            );
 
             alert(dados.mensagem);
 
@@ -341,21 +399,19 @@ function cadastrarProfissional(event) {
                 verificarOutroServico();
 
                 fechar();
-
             }
-
         })
-
         .catch(function (erro) {
 
-            console.log(erro);
+            console.log(
+                "Erro no cadastro profissional:",
+                erro
+            );
 
             alert(
                 "Erro ao conectar com o servidor. Veja o Console (F12)."
             );
-
         });
-
 }
 
 
@@ -372,9 +428,7 @@ document
             function (event) {
 
                 if (event.target === modal) {
-
                     fechar();
-
                 }
 
             }
@@ -387,14 +441,20 @@ document
 /* VERIFICAR SESSÃO                          */
 /* ========================================= */
 
+/*
+    Esta função foi mantida para referência,
+    mas NÃO é executada automaticamente.
+
+    O arquivo verificar_sessao.php não existe
+    atualmente no projeto.
+*/
+
 function verificarSessao() {
 
     fetch("../verificar_sessao.php")
 
         .then(function (resposta) {
-
             return resposta.json();
-
         })
 
         .then(function (dados) {
@@ -402,21 +462,20 @@ function verificarSessao() {
             if (dados.logado) {
 
                 let botao =
-                    document.getElementById("btnUsuario");
+                    document.getElementById(
+                        "btnUsuario"
+                    );
 
                 if (botao) {
 
                     botao.textContent =
                         dados.nome;
 
-                    botao.onclick = function () {
-
-                        abrirCliente();
-
-                    };
-
+                    botao.onclick =
+                        function () {
+                            abrirCliente();
+                        };
                 }
-
 
                 let nomePerfil =
                     document.querySelector(
@@ -426,10 +485,9 @@ function verificarSessao() {
                 if (nomePerfil) {
 
                     nomePerfil.textContent =
-                        dados.nome || "Meu perfil";
-
+                        dados.nome ||
+                        "Meu perfil";
                 }
-
             }
 
         })
@@ -442,10 +500,7 @@ function verificarSessao() {
             );
 
         });
-
 }
-
-verificarSessao();
 
 
 /* ========================================= */
@@ -460,11 +515,8 @@ function abrirSobre() {
         document.getElementById("sobre");
 
     if (sobre) {
-
         sobre.classList.add("ativo");
-
     }
-
 }
 
 
@@ -480,11 +532,8 @@ function abrirSeguranca() {
         document.getElementById("seguranca");
 
     if (seguranca) {
-
         seguranca.classList.add("ativo");
-
     }
-
 }
 
 
@@ -495,16 +544,15 @@ function abrirSeguranca() {
 function abrirMenuPerfil() {
 
     const menu =
-        document.getElementById("menuPerfil");
+        document.getElementById(
+            "menuPerfil"
+        );
 
     if (!menu) {
-
         return;
-
     }
 
     menu.classList.toggle("ativo");
-
 }
 
 
@@ -515,33 +563,27 @@ function abrirMenuPerfil() {
 function editarPerfil(event) {
 
     if (event) {
-
         event.preventDefault();
-
         event.stopPropagation();
-
     }
-
 
     const menu =
-        document.getElementById("menuPerfil");
+        document.getElementById(
+            "menuPerfil"
+        );
 
     if (menu) {
-
         menu.classList.remove("ativo");
-
     }
-
 
     const modal =
-        document.getElementById("modalEditarPerfil");
+        document.getElementById(
+            "modalEditarPerfil"
+        );
 
     if (modal) {
-
         modal.classList.add("ativo");
-
     }
-
 }
 
 
@@ -552,19 +594,18 @@ function editarPerfil(event) {
 function fecharEditarPerfil() {
 
     const modal =
-        document.getElementById("modalEditarPerfil");
+        document.getElementById(
+            "modalEditarPerfil"
+        );
 
     if (modal) {
-
         modal.classList.remove("ativo");
-
     }
-
 }
 
 
 /* ========================================= */
-/* FORMULÁRIO EDITAR PERFIL                 */
+/* FORMULÁRIO EDITAR PERFIL                  */
 /* ========================================= */
 
 document.addEventListener(
@@ -572,7 +613,9 @@ document.addEventListener(
     function () {
 
         const formulario =
-            document.getElementById("formEditarPerfil");
+            document.getElementById(
+                "formEditarPerfil"
+            );
 
         if (formulario) {
 
@@ -587,12 +630,9 @@ document.addEventListener(
                     );
 
                     fecharEditarPerfil();
-
                 }
             );
-
         }
-
     }
 );
 
@@ -604,21 +644,21 @@ document.addEventListener(
 function sairConta() {
 
     const menu =
-        document.getElementById("menuPerfil");
+        document.getElementById(
+            "menuPerfil"
+        );
 
     if (menu) {
-
         menu.classList.remove("ativo");
-
     }
 
-    window.location.href = "index.html";
-
+    window.location.href =
+        "index.html";
 }
 
 
 /* ========================================= */
-/* FECHAR MENU DO PERFIL AO CLICAR FORA     */
+/* FECHAR MENU DO PERFIL AO CLICAR FORA      */
 /* ========================================= */
 
 document.addEventListener(
@@ -626,33 +666,41 @@ document.addEventListener(
     function (evento) {
 
         const menuPerfil =
-            document.getElementById("menuPerfil");
+            document.getElementById(
+                "menuPerfil"
+            );
 
         const botaoPerfil =
-            document.querySelector(".btn-perfil");
-
-        if (!menuPerfil || !botaoPerfil) {
-
-            return;
-
-        }
-
+            document.querySelector(
+                ".btn-perfil"
+            );
 
         if (
-            !menuPerfil.contains(evento.target) &&
-            !botaoPerfil.contains(evento.target)
+            !menuPerfil ||
+            !botaoPerfil
         ) {
-
-            menuPerfil.classList.remove("ativo");
-
+            return;
         }
 
+        if (
+            !menuPerfil.contains(
+                evento.target
+            ) &&
+            !botaoPerfil.contains(
+                evento.target
+            )
+        ) {
+
+            menuPerfil.classList.remove(
+                "ativo"
+            );
+        }
     }
 );
 
 
 /* ========================================= */
-/* FOTO - EDITAR PERFIL                     */
+/* FOTO - EDITAR PERFIL                      */
 /* ========================================= */
 
 document.addEventListener(
@@ -660,19 +708,25 @@ document.addEventListener(
     function () {
 
         const inputFoto =
-            document.getElementById("fotoBalao");
+            document.getElementById(
+                "fotoBalao"
+            );
 
         const previaFoto =
-            document.getElementById("previaFotoPerfil");
+            document.getElementById(
+                "previaFotoPerfil"
+            );
 
         const removerFoto =
-            document.getElementById("removerFotoPerfil");
+            document.getElementById(
+                "removerFotoPerfil"
+            );
 
-
-        if (!inputFoto || !previaFoto) {
-
+        if (
+            !inputFoto ||
+            !previaFoto
+        ) {
             return;
-
         }
 
 
@@ -686,14 +740,13 @@ document.addEventListener(
                     inputFoto.files[0];
 
                 if (!arquivo) {
-
                     return;
-
                 }
 
-
                 if (
-                    !arquivo.type.startsWith("image/")
+                    !arquivo.type.startsWith(
+                        "image/"
+                    )
                 ) {
 
                     alert(
@@ -703,21 +756,21 @@ document.addEventListener(
                     inputFoto.value = "";
 
                     return;
-
                 }
-
 
                 const leitor =
                     new FileReader();
 
-
                 leitor.onload =
                     function (evento) {
 
-                        previaFoto.innerHTML = "";
+                        previaFoto.innerHTML =
+                            "";
 
                         const imagem =
-                            document.createElement("img");
+                            document.createElement(
+                                "img"
+                            );
 
                         imagem.src =
                             evento.target.result;
@@ -728,12 +781,11 @@ document.addEventListener(
                         previaFoto.appendChild(
                             imagem
                         );
-
                     };
 
-
-                leitor.readAsDataURL(arquivo);
-
+                leitor.readAsDataURL(
+                    arquivo
+                );
             }
         );
 
@@ -748,12 +800,10 @@ document.addEventListener(
 
                     inputFoto.value = "";
 
-                    previaFoto.innerHTML = "👤";
-
+                    previaFoto.innerHTML =
+                        "👤";
                 }
             );
-
         }
-
     }
 );

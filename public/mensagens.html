@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/style.css?v=16">
 
     <style>
+
         /* =========================
            ÁREA DE MENSAGENS
         ========================= */
@@ -81,11 +82,9 @@
             font-size: 20px;
             font-weight: bold;
             cursor: pointer;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             overflow: hidden;
             transition: 0.2s;
         }
@@ -104,13 +103,10 @@
             right: 0;
             top: 55px;
             width: 210px;
-
             background: white;
             border-radius: 14px;
             padding: 10px;
-
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-
             display: none;
             z-index: 1000;
         }
@@ -139,14 +135,11 @@
             width: 100%;
             border: none;
             background: transparent;
-
             padding: 11px 12px;
             border-radius: 9px;
-
             text-align: left;
             font-size: 14px;
             cursor: pointer;
-
             transition: 0.2s;
         }
 
@@ -164,12 +157,15 @@
         ========================= */
 
         @media (max-width: 900px) {
+
             .area-mensagens {
                 height: 620px;
             }
+
         }
 
         @media (max-width: 700px) {
+
             .area-mensagens {
                 height: auto;
                 min-height: 0;
@@ -189,8 +185,11 @@
             .menu-perfil-mensagens {
                 right: -5px;
             }
+
         }
+
     </style>
+
 </head>
 
 
@@ -205,13 +204,8 @@
     <div class="menu">
 
         <!-- VOLTAR PARA PESQUISA -->
-        <button
-            class="btn-entrar"
-            type="button"
-            onclick="window.location.href='pesquisar.html'"
-        >
-            ← Profissionais
-        </button>
+
+    
 
 
         <!-- =========================
@@ -229,7 +223,7 @@
 
                 <img
                     src="../img/ana.png"
-                    alt="Ana Lima"
+                    alt="Perfil"
                     onerror="this.style.display='none'; this.parentElement.textContent='👤';"
                 >
 
@@ -243,8 +237,8 @@
 
                 <div class="info-perfil-mensagens">
 
-                    <strong>
-                        Ana Lima
+                    <strong id="nomePerfilMenu">
+                        Profissional
                     </strong>
 
                     <span>
@@ -329,146 +323,10 @@
 
             </div>
 
-
-            <!-- =========================
-                 PEDRO
-            ========================== -->
-
-            <button
-                class="conversa ativa"
-                type="button"
-            >
-
-                <div class="avatar-conversa">
-
-                    <img
-                        src="../img/pedro.png"
-                        alt="Pedro Santos"
-                        onerror="this.style.display='none'; this.parentElement.textContent='PS';"
-                    >
-
-                </div>
-
-
-                <div class="info-conversa">
-
-                    <div class="nome-conversa">
-
-                        <strong>
-                            Pedro Santos
-                        </strong>
-
-                        <small>
-                            14:40
-                        </small>
-
-                    </div>
-
-                    <span>
-                        👤 Cliente
-                    </span>
-
-                    <small class="ultima-mensagem">
-                        Perfeito. Era exatamente o que eu precisava.
-                    </small>
-
-                </div>
-
-            </button>
-
-
-            <!-- =========================
-                 MARIANA
-            ========================== -->
-
-            <button
-                class="conversa"
-                type="button"
-            >
-
-                <div class="avatar-conversa">
-
-                    <img
-                        src="../img/mariana.png"
-                        alt="Mariana Souza"
-                        onerror="this.style.display='none'; this.parentElement.textContent='MS';"
-                    >
-
-                </div>
-
-
-                <div class="info-conversa">
-
-                    <div class="nome-conversa">
-
-                        <strong>
-                            Mariana Souza
-                        </strong>
-
-                        <small>
-                            Ontem
-                        </small>
-
-                    </div>
-
-                    <span>
-                        👤 Cliente
-                    </span>
-
-                    <small class="ultima-mensagem">
-                        Você poderia me passar mais informações?
-                    </small>
-
-                </div>
-
-            </button>
-
-
-            <!-- =========================
-                 JULIANA
-            ========================== -->
-
-            <button
-                class="conversa"
-                type="button"
-            >
-
-                <div class="avatar-conversa">
-
-                    <img
-                        src="../img/juliana.png"
-                        alt="Juliana Paes"
-                        onerror="this.style.display='none'; this.parentElement.textContent='JP';"
-                    >
-
-                </div>
-
-
-                <div class="info-conversa">
-
-                    <div class="nome-conversa">
-
-                        <strong>
-                            Juliana Paes
-                        </strong>
-
-                        <small>
-                            Seg
-                        </small>
-
-                    </div>
-
-                    <span>
-                        👤 Cliente
-                    </span>
-
-                    <small class="ultima-mensagem">
-                        Gostaria de solicitar um orçamento.
-                    </small>
-
-                </div>
-
-            </button>
+            <!--
+                O mensagens.js vai colocar
+                as conversas reais aqui.
+            -->
 
         </aside>
 
@@ -488,11 +346,9 @@
 
                     <div class="avatar-chat">
 
-                        <img
-                            src="../img/carlos.jpg"
-                            alt="Carlos Santos"
-                            onerror="this.style.display='none'; this.parentElement.textContent='CS';"
-                        >
+                        <span>
+                            👤
+                        </span>
 
                     </div>
 
@@ -500,11 +356,11 @@
                     <div>
 
                         <h2>
-                            Carlos Santos
+                            Selecione uma conversa
                         </h2>
 
                         <span>
-                            Cliente • Paracambi
+                            Escolha um cliente para começar
                         </span>
 
                     </div>
@@ -520,183 +376,30 @@
 
             <div class="mensagens-chat">
 
+                <div
+                    style="
+                        padding: 40px;
+                        text-align: center;
+                        color: #777;
+                    "
+                >
 
-                <div class="aviso-chat">
-
-                    <span>
-                        🔒
-                    </span>
-
-                    <p>
-                        Combine os detalhes do serviço por aqui e
-                        confirme tudo antes de fechar negócio.
-                    </p>
-
-                </div>
-
-
-                <!-- CLIENTE -->
-
-                <div class="mensagem recebida">
-
-                    <p>
-                        Olá! Tudo bem? Vi seu perfil pelo Dekko.
-                    </p>
-
-                    <small>
-                        14:32
-                    </small>
-
-                </div>
-
-
-                <!-- PROFISSIONAL -->
-
-                <div class="mensagem enviada">
-
-                    <p>
-                        Oi! Tudo bem sim. Como posso te ajudar?
-                    </p>
-
-                    <small>
-                        14:34
-                    </small>
-
-                </div>
-
-
-                <!-- CLIENTE -->
-
-                <div class="mensagem recebida">
-
-                    <p>
-                        Preciso fazer uma instalação elétrica na minha casa.
-                    </p>
-
-                    <small>
-                        14:35
-                    </small>
-
-                </div>
-
-
-                <!-- PROFISSIONAL -->
-
-                <div class="mensagem enviada">
-
-                    <p>
-                        Claro! Posso te ajudar com isso. Pode me explicar
-                        um pouco melhor o que você precisa?
-                    </p>
-
-                    <small>
-                        14:36
-                    </small>
-
-                </div>
-
-
-                <!-- CLIENTE -->
-
-                <div class="mensagem recebida">
-
-                    <p>
-                        Preciso instalar algumas tomadas e trocar
-                        algumas lâmpadas.
-                    </p>
-
-                    <small>
-                        14:37
-                    </small>
-
-                </div>
-
-
-                <!-- PROFISSIONAL -->
-
-                <div class="mensagem enviada">
-
-                    <p>
-                        Perfeito. Esse é um serviço que eu realizo.
-                        Posso te passar mais informações sobre o trabalho.
-                    </p>
-
-                    <small>
-                        14:38
-                    </small>
-
-                </div>
-
-
-                <!-- CLIENTE -->
-
-                <div class="mensagem recebida">
-
-                    <p>
-                        Ótimo! Era exatamente isso que eu estava procurando.
-                    </p>
-
-                    <small>
-                        14:40
-                    </small>
-
-                </div>
-
-
-                <!-- =========================
-                     CONFIRMAÇÃO
-                ========================== -->
-
-                <div class="confirmacao-servico">
-
-                    <div class="icone-confirmacao">
-                        🤝
+                    <div
+                        style="
+                            font-size: 40px;
+                            margin-bottom: 10px;
+                        "
+                    >
+                        💬
                     </div>
 
+                    <strong>
+                        Selecione uma conversa
+                    </strong>
 
-                    <div class="conteudo-confirmacao">
-
-                        <span class="titulo-confirmacao">
-                            Confirmar serviço
-                        </span>
-
-                        <p>
-                            Carlos Santos quer confirmar o serviço de
-                            instalação elétrica com você.
-                        </p>
-
-
-                        <div class="status-confirmacao">
-
-                            <span class="bolinha-status"></span>
-
-                            Aguardando sua resposta
-
-                        </div>
-
-
-                        <div class="acoes-confirmacao">
-
-                            <button
-                                class="btn-confirmar-servico"
-                                type="button"
-                                onclick="confirmarServico()"
-                            >
-                                ✓ Confirmar
-                            </button>
-
-
-                            <button
-                                class="btn-recusar-servico"
-                                type="button"
-                                onclick="recusarServico()"
-                            >
-                                Recusar
-                            </button>
-
-                        </div>
-
-                    </div>
+                    <p>
+                        Escolha um cliente ao lado para visualizar as mensagens.
+                    </p>
 
                 </div>
 
@@ -718,7 +421,6 @@
                     autocomplete="off"
                 >
 
-
                 <button
                     type="button"
                     aria-label="Enviar mensagem"
@@ -727,6 +429,7 @@
                 </button>
 
             </form>
+
 
         </section>
 
@@ -755,4 +458,5 @@
 <script src="../js/mensagens.js?v=1"></script>
 
 </body>
+
 </html>

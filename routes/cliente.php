@@ -20,6 +20,21 @@ if ($acao === "cadastrar") {
 
     $controller->atualizarPerfil();
 
+} elseif ($acao === "meuPerfil") {
+
+    $controller->meuPerfil();
+
+} elseif ($acao === "sair") {
+
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $_SESSION = [];
+    session_destroy();
+
+    echo json_encode(["sucesso" => true]);
+
 } else {
 
     echo json_encode([

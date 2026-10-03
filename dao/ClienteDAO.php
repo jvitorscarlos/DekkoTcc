@@ -60,4 +60,13 @@ class ClienteDAO
             $idCliente
         ]);
     }
+    public function buscarPorId($idCliente)
+{
+    $sql = "SELECT * FROM cliente WHERE id_cliente = ?";
+
+    $stmt = $this->conexao->prepare($sql);
+    $stmt->execute([$idCliente]);
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 }

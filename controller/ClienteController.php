@@ -240,7 +240,7 @@ class ClienteController
             ]);
             return;
         }
-
+       
         $_SESSION["cliente_id"] = $cliente["id_cliente"];
         $_SESSION["cliente_nome"] = $cliente["nome"];
         $_SESSION["cliente_email"] = $cliente["email"];
@@ -253,6 +253,40 @@ class ClienteController
                 "nome" => $cliente["nome"],
                 "email" => $cliente["email"],
                 "perfil_completo" => $cliente["perfil_completo"]
+            ]
+        ]);
+    }
+
+
+
+    public function meuPerfil()
+    {
+        if (!isset($_SESSION["cliente_id"])) {
+            echo json_encode([
+                "sucesso" => false,
+                "mensagem" => "Cliente não está logado."
+            ]);
+            return;
+        }
+
+        $cliente = $this->clienteDAO->buscarPorId(
+            $_SESSION["cliente_id"]
+        );
+
+        if (!$cliente) {
+            echo json_encode([
+                "sucesso" => false,
+                "mensagem" => "Cliente não encontrado."
+            ]);
+            return;
+        }
+
+        echo json_encode([
+            "sucesso" => true,
+            "cliente" => [
+                "id" => $cliente["id_cliente"],
+                "nome" => $cliente["nome"],
+                "foto" => $cliente["foto"]
             ]
         ]);
     }

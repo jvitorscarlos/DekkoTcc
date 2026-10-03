@@ -12,6 +12,14 @@ if ($acao === "cadastrar") {
 
     $controller->cadastrar();
 
+} elseif ($acao === "login") {
+
+    $controller->login();
+
+} elseif ($acao === "atualizarPerfil") {
+
+    $controller->atualizarPerfil();
+
 } elseif ($acao === "listar") {
 
     $controller->listar();
@@ -19,6 +27,21 @@ if ($acao === "cadastrar") {
 } elseif ($acao === "buscar") {
 
     $controller->buscarPorId();
+
+} elseif ($acao === "meuPerfil") {
+
+    $controller->meuPerfil();
+
+} elseif ($acao === "sair") {
+
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $_SESSION = [];
+    session_destroy();
+
+    echo json_encode(["sucesso" => true]);
 
 } else {
 

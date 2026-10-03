@@ -1,3 +1,4 @@
+
 /* ========================================= */
 /* DEKKO - PESQUISAR.JS                     */
 /* Pesquisa e listagem de profissionais     */
@@ -33,7 +34,7 @@ function criarCardProfissional(profissional) {
 
         fotoHTML = `
             <img
-                src="${profissional.foto}"
+                src="../${profissional.foto}"
                 alt="Foto de ${profissional.nome}"
             >
         `;
@@ -68,15 +69,11 @@ function criarCardProfissional(profissional) {
 
 
     return `
-
         <div class="card-profissional">
 
             <div class="foto-card-profissional">
-
                 ${fotoHTML}
-
             </div>
-
 
             <div class="info-card-profissional">
 
@@ -85,27 +82,21 @@ function criarCardProfissional(profissional) {
                 </h3>
 
                 <p class="especialidade">
-
                     ${
                         profissional.servico ||
                         "Serviço não informado"
                     }
-
                 </p>
 
                 <p>
-
                     📍
-
                     ${
                         profissional.regiao ||
                         "Região não informada"
                     }
-
                 </p>
 
             </div>
-
 
             <button
                 type="button"
@@ -120,11 +111,8 @@ function criarCardProfissional(profissional) {
                         : "Favoritar profissional"
                 }"
             >
-
                 ${simboloFavorito}
-
             </button>
-
 
             <button
                 type="button"
@@ -133,13 +121,10 @@ function criarCardProfissional(profissional) {
                     ${profissional.id_profissional}
                 )"
             >
-
                 Ver perfil
-
             </button>
 
         </div>
-
     `;
 }
 
@@ -178,9 +163,7 @@ function listarProfissionais(
     return fetch(url)
 
         .then(function (resposta) {
-
             return resposta.json();
-
         })
 
         .then(function (dados) {
@@ -192,9 +175,7 @@ function listarProfissionais(
 
 
             if (!lista) {
-
                 return dados.profissionais || [];
-
             }
 
 
@@ -208,17 +189,12 @@ function listarProfissionais(
             ) {
 
                 lista.innerHTML = `
-
                     <p class="mensagem-busca">
-
                         😕 Nenhum profissional encontrado.
-
                     </p>
-
                 `;
 
                 return [];
-
             }
 
 
@@ -255,13 +231,9 @@ function listarProfissionais(
             if (lista) {
 
                 lista.innerHTML = `
-
                     <p class="mensagem-busca">
-
                         ❌ Não foi possível carregar os profissionais.
-
                     </p>
-
                 `;
 
             }
@@ -301,9 +273,7 @@ function buscarProfissionais() {
         !campoServico ||
         !campoRegiao
     ) {
-
         return;
-
     }
 
 
@@ -361,7 +331,8 @@ if (
                     .toLowerCase();
 
 
-            caixaSugestoes.innerHTML = "";
+            caixaSugestoes.innerHTML =
+                "";
 
 
             if (!texto) {
@@ -370,7 +341,6 @@ if (
                     "none";
 
                 return;
-
             }
 
 
@@ -392,7 +362,6 @@ if (
                     "none";
 
                 return;
-
             }
 
 
@@ -451,10 +420,6 @@ if (
     );
 
 
-    /* ===================================== */
-    /* FECHAR SUGESTÕES AO CLICAR FORA       */
-    /* ===================================== */
-
     document.addEventListener(
         "click",
         function (evento) {
@@ -489,3 +454,115 @@ function verPerfil(id) {
         "perfil.html?id=" + id;
 
 }
+
+
+/* ========================================= */
+/* CARREGAR FOTO DO CLIENTE                  */
+/* ========================================= */
+
+function carregarFotoCliente() {
+
+    fetch(
+        "../routes/cliente.php?acao=meuPerfil"
+    )
+
+        .then(function (resposta) {
+
+            return resposta.json();
+
+        })
+
+        .then(function (dados) {
+
+            console.log(
+                "Dados do meu perfil:",
+                dados
+            );
+
+
+            if (
+                !dados.sucesso ||
+                !dados.cliente ||
+                !dados.cliente.foto
+            ) {
+
+                console.log(
+                    "Foto do cliente não encontrada."
+                );
+
+                return;
+            }
+
+
+            const botaoPerfil =
+                document.getElementById(
+                    "btnPerfilCliente"
+                );
+
+
+            if (!botaoPerfil) {
+
+                console.log(
+                    "Botão de perfil não encontrado."
+                );
+
+                return;
+            }
+
+
+            let caminhoFoto =
+                dados.cliente.foto;
+
+
+            /*
+             * O banco salva:
+             *
+             * img/clientes/arquivo.jpg
+             *
+             * Como estamos dentro de public/,
+             * precisamos voltar uma pasta.
+             */
+
+            if (
+                !caminhoFoto.startsWith("../")
+            ) {
+
+                caminhoFoto =
+                    "../" + caminhoFoto;
+
+            }
+
+
+            botaoPerfil.innerHTML = `
+                <img
+                    src="${caminhoFoto}"
+                    alt="Foto do meu perfil"
+                >
+            `;
+
+        })
+
+        .catch(function (erro) {
+
+            console.log(
+                "Erro ao carregar foto do cliente:",
+                erro
+            );
+
+        });
+
+}
+
+
+/* ========================================= */
+/* INICIAR                                  */
+/* ========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        carregarFotoCliente();
+
+    }
+);

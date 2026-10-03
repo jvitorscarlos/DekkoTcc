@@ -8,10 +8,9 @@ class Profissional
     private $senha;
     private $telefone;
     private $endereco;
-    private $regiao;
-    private $experiencia;
-    private $descricao;
     private $foto;
+    private $biografia;
+    private $id_regiao;
 
     public function getIdProfissional()
     {
@@ -73,36 +72,6 @@ class Profissional
         $this->endereco = $endereco;
     }
 
-    public function getRegiao()
-    {
-        return $this->regiao;
-    }
-
-    public function setRegiao($regiao)
-    {
-        $this->regiao = $regiao;
-    }
-
-    public function getExperiencia()
-    {
-        return $this->experiencia;
-    }
-
-    public function setExperiencia($experiencia)
-    {
-        $this->experiencia = $experiencia;
-    }
-
-    public function getDescricao()
-    {
-        return $this->descricao;
-    }
-
-    public function setDescricao($descricao)
-    {
-        $this->descricao = $descricao;
-    }
-
     public function getFoto()
     {
         return $this->foto;
@@ -111,5 +80,25 @@ class Profissional
     public function setFoto($foto)
     {
         $this->foto = $foto;
+    }
+
+    public function getBiografia()
+    {
+        return $this->biografia;
+    }
+
+    public function setBiografia($biografia)
+    {
+        $this->biografia = $biografia;
+    }
+
+    public function getIdRegiao()
+    {
+        return $this->id_regiao;
+    }
+
+    public function setIdRegiao($id_regiao)
+    {
+        $this->id_regiao = $id_regiao;
     }
 }
