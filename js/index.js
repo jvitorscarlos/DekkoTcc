@@ -399,6 +399,14 @@ function cadastrarProfissional(event) {
                 verificarOutroServico();
 
                 fechar();
+
+                /* igual ao cliente: avisa e abre o login */
+
+                alert(
+                    "Conta criada! Agora faça login para continuar."
+                );
+
+                abrirLogin();
             }
         })
         .catch(function (erro) {
@@ -652,8 +660,16 @@ function sairConta() {
         menu.classList.remove("ativo");
     }
 
-    window.location.href =
-        "index.html";
+    /* encerra a sessão (cliente e profissional) e volta ao início */
+
+    Promise.all([
+        fetch("../routes/cliente.php?acao=sair"),
+        fetch("../routes/profissional.php?acao=sair")
+    ])
+        .catch(function () {})
+        .then(function () {
+            window.location.href = "index.html";
+        });
 }
 
 

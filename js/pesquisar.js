@@ -566,3 +566,23 @@ document.addEventListener(
 
     }
 );
+/* ========================================= */
+/* EDITAR PERFIL DO CLIENTE                  */
+/* ========================================= */
+
+/*
+    Substitui a função do index.js (que abria um modal
+    que não salvava nada) e leva para a página de
+    editar perfil, que salva de verdade.
+*/
+
+function editarPerfil(event) {
+
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    window.location.href =
+        "criar-perfil-cli.html?editar=1";
+}

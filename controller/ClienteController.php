@@ -73,6 +73,21 @@ class ClienteController
         return $regiao ? $regiao["id_regiao"] : null;
     }
 
+    // Dados que já estão salvos (telefone, região e foto atual)
+    private function buscarDadosAtuais($idCliente)
+    {
+        $sql = "SELECT telefone, id_regiao, foto
+                FROM cliente
+                WHERE id_cliente = ?";
+
+        $conexao = Database::getConexao();
+
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute([$idCliente]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function atualizarPerfil()
     {
         if (!isset($_SESSION["cliente_id"])) {
@@ -85,51 +100,63 @@ class ClienteController
 
         $idCliente = $_SESSION["cliente_id"];
 
-        $nome = $_POST["nome"] ?? "";
-        $telefone = $_POST["telefone"] ?? "";
-        $regiao = $_POST["regiao"] ?? "";
+        // Agora o perfil só pede o nome e a foto.
+        // Telefone e região continuam os do cadastro.
+        $nome = trim($_POST["nome"] ?? "");
         $fotoBase64 = $_POST["foto"] ?? "";
 
-        if ($nome === "" || $telefone === "" || $regiao === "") {
+        if ($nome === "") {
             echo json_encode([
                 "sucesso" => false,
-                "mensagem" => "Preencha todos os campos."
+                "mensagem" => "Digite seu nome."
             ]);
             return;
         }
 
-        $idRegiao = $this->buscarIdRegiao($regiao);
+        $atual = $this->buscarDadosAtuais($idCliente);
 
-        if (!$idRegiao) {
+        if (!$atual) {
             echo json_encode([
                 "sucesso" => false,
-                "mensagem" => "Região inválida."
+                "mensagem" => "Cliente não encontrado."
             ]);
             return;
         }
 
-        if ($fotoBase64 === "") {
-            echo json_encode([
-                "sucesso" => false,
-                "mensagem" => "Escolha uma foto de perfil."
-            ]);
-            return;
-        }
+        // Começa com a foto que o cliente já tem
+        $foto = $atual["foto"];
 
-        /*
-         * Descobre o tipo da imagem.
-         */
-        if (
-            preg_match(
-                '/^data:image\/(\w+);base64,/',
-                $fotoBase64,
-                $tipo
-            )
-        ) {
+        if ($fotoBase64 !== "") {
+
+            /*
+             * Descobre o tipo da imagem.
+             */
+            if (
+                !preg_match(
+                    '/^data:image\/(\w+);base64,/',
+                    $fotoBase64,
+                    $tipo
+                )
+            ) {
+                echo json_encode([
+                    "sucesso" => false,
+                    "mensagem" => "Formato de foto inválido."
+                ]);
+                return;
+            }
+
             $extensao = strtolower($tipo[1]);
 
             if ($extensao === "jpeg") {
                 $extensao = "jpg";
+            }
+
+            if (!in_array($extensao, ["jpg", "png", "gif", "webp"])) {
+                echo json_encode([
+                    "sucesso" => false,
+                    "mensagem" => "Use uma foto JPG, PNG, GIF ou WEBP."
+                ]);
+                return;
             }
 
             $dadosImagem = substr(
@@ -137,66 +164,80 @@ class ClienteController
                 strpos($fotoBase64, ",") + 1
             );
 
-            $dadosImagem = base64_decode($dadosImagem);
+            $dadosImagem = base64_decode($dadosImagem, true);
 
-            if ($dadosImagem === false) {
+            if ($dadosImagem === false || $dadosImagem === "") {
                 echo json_encode([
                     "sucesso" => false,
                     "mensagem" => "Não foi possível processar a foto."
                 ]);
                 return;
             }
-        } else {
+
+            if (strlen($dadosImagem) > 5 * 1024 * 1024) {
+                echo json_encode([
+                    "sucesso" => false,
+                    "mensagem" => "A foto deve ter no máximo 5 MB."
+                ]);
+                return;
+            }
+
+            /*
+             * Cria a pasta de fotos dos clientes,
+             * caso ela ainda não exista.
+             */
+            $pasta = "../img/clientes/";
+
+            if (!is_dir($pasta)) {
+                mkdir($pasta, 0777, true);
+            }
+
+            /*
+             * Cria um nome único para a foto.
+             */
+            $nomeArquivo = "cliente_" .
+                $idCliente .
+                "_" .
+                time() .
+                "." .
+                $extensao;
+
+            $caminhoArquivo = $pasta . $nomeArquivo;
+
+            /*
+             * Salva a imagem fisicamente.
+             */
+            if (file_put_contents($caminhoArquivo, $dadosImagem) === false) {
+                echo json_encode([
+                    "sucesso" => false,
+                    "mensagem" => "Não foi possível salvar a foto."
+                ]);
+                return;
+            }
+
+            /*
+             * Caminho que será salvo no banco.
+             */
+            $foto = "img/clientes/" . $nomeArquivo;
+
+        } elseif (
+            $foto === null ||
+            $foto === "" ||
+            $foto === "sem-foto.jpg"
+        ) {
+            // Perfil novo: a foto é obrigatória
             echo json_encode([
                 "sucesso" => false,
-                "mensagem" => "Formato de foto inválido."
+                "mensagem" => "Escolha uma foto de perfil."
             ]);
             return;
         }
-
-        /*
-         * Cria a pasta de fotos dos clientes,
-         * caso ela ainda não exista.
-         */
-        $pasta = "../img/clientes/";
-
-        if (!is_dir($pasta)) {
-            mkdir($pasta, 0777, true);
-        }
-
-        /*
-         * Cria um nome único para a foto.
-         */
-        $nomeArquivo = "cliente_" .
-            $idCliente .
-            "_" .
-            time() .
-            "." .
-            $extensao;
-
-        $caminhoArquivo = $pasta . $nomeArquivo;
-
-        /*
-         * Salva a imagem fisicamente.
-         */
-        if (!file_put_contents($caminhoArquivo, $dadosImagem)) {
-            echo json_encode([
-                "sucesso" => false,
-                "mensagem" => "Não foi possível salvar a foto."
-            ]);
-            return;
-        }
-
-        /*
-         * Caminho que será salvo no banco.
-         */
-        $foto = "img/clientes/" . $nomeArquivo;
 
         $resultado = $this->clienteDAO->atualizarPerfil(
             $idCliente,
             $nome,
-            $telefone,
-            $idRegiao,
+            $atual["telefone"],
+            $atual["id_regiao"],
             $foto
         );
 
@@ -240,7 +281,10 @@ class ClienteController
             ]);
             return;
         }
-       
+
+        // Evita ficar logado como profissional e cliente ao mesmo tempo
+        unset($_SESSION["profissional_id"]);
+
         $_SESSION["cliente_id"] = $cliente["id_cliente"];
         $_SESSION["cliente_nome"] = $cliente["nome"];
         $_SESSION["cliente_email"] = $cliente["email"];

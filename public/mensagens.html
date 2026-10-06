@@ -2,12 +2,20 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Dekko - Mensagens</title>
 
-    <link rel="stylesheet" href="../css/style.css?v=16">
+    <link
+        rel="stylesheet"
+        href="../css/style.css?v=16"
+    >
 
     <style>
 
@@ -55,11 +63,13 @@
         .avatar-conversa img,
         .avatar-chat img,
         .btn-perfil-mensagens img {
+
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
             display: block;
+
         }
 
 
@@ -72,25 +82,77 @@
         }
 
         .btn-perfil-mensagens {
+
             width: 46px;
             height: 46px;
+
             padding: 0;
+
             border-radius: 50%;
+
             border: none;
+
             background: #f6a623;
+
             color: white;
+
             font-size: 20px;
+
             font-weight: bold;
+
             cursor: pointer;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             overflow: hidden;
+
             transition: 0.2s;
+
         }
 
         .btn-perfil-mensagens:hover {
+
             transform: scale(1.05);
+
+        }
+
+
+        /* =========================
+           VOLTAR À PESQUISA
+        ========================= */
+
+        .btn-voltar-pesquisa {
+
+            border: none;
+
+            background: transparent;
+
+            color: #222;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            padding: 10px 14px;
+
+            border-radius: 10px;
+
+            transition: 0.2s;
+
+        }
+
+        .btn-voltar-pesquisa:hover {
+
+            background: #f5f5f5;
+
+            color: #f6a623;
+
         }
 
 
@@ -99,56 +161,95 @@
         ========================= */
 
         .menu-perfil-mensagens {
+
             position: absolute;
+
             right: 0;
+
             top: 55px;
+
             width: 210px;
+
             background: white;
+
             border-radius: 14px;
+
             padding: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.15);
+
             display: none;
+
             z-index: 1000;
+
         }
 
         .menu-perfil-mensagens.aberto {
+
             display: block;
+
         }
 
         .info-perfil-mensagens {
+
             padding: 10px 12px;
+
             border-bottom: 1px solid #eee;
+
             margin-bottom: 6px;
+
         }
 
         .info-perfil-mensagens strong {
+
             display: block;
+
             font-size: 15px;
+
         }
 
         .info-perfil-mensagens span {
+
             font-size: 12px;
+
             color: #777;
+
         }
 
         .opcao-perfil-mensagens {
+
             width: 100%;
+
             border: none;
+
             background: transparent;
+
             padding: 11px 12px;
+
             border-radius: 9px;
+
             text-align: left;
+
             font-size: 14px;
+
             cursor: pointer;
+
             transition: 0.2s;
+
         }
 
         .opcao-perfil-mensagens:hover {
+
             background: #f7f7f7;
+
         }
 
         .opcao-sair {
+
             color: #d64545;
+
         }
 
 
@@ -159,7 +260,9 @@
         @media (max-width: 900px) {
 
             .area-mensagens {
+
                 height: 620px;
+
             }
 
         }
@@ -167,23 +270,35 @@
         @media (max-width: 700px) {
 
             .area-mensagens {
+
                 height: auto;
+
                 min-height: 0;
+
                 flex-direction: column;
+
             }
 
             .lista-conversas {
+
                 height: 260px;
+
                 flex-shrink: 0;
+
             }
 
             .chat {
+
                 height: 600px;
+
                 min-height: 600px;
+
             }
 
             .menu-perfil-mensagens {
+
                 right: -5px;
+
             }
 
         }
@@ -195,24 +310,27 @@
 
 <body>
 
+
 <header>
 
     <div class="logo">
+
         De<span>kko</span>
+
     </div>
+
 
     <div class="menu">
 
-        <!-- VOLTAR PARA PESQUISA -->
-
-    
-
 
         <!-- =========================
-             PERFIL DO PROFISSIONAL
+             MENU DO USUÁRIO
         ========================== -->
 
         <div class="perfil-mensagens">
+
+            <!-- PROFISSIONAL:
+                 aparece a bolinha -->
 
             <button
                 class="btn-perfil-mensagens"
@@ -224,11 +342,33 @@
                 <img
                     src="../img/ana.png"
                     alt="Perfil"
-                    onerror="this.style.display='none'; this.parentElement.textContent='👤';"
+
+                    onerror="
+                        this.style.display='none';
+                        this.parentElement.textContent='👤';
+                    "
                 >
 
             </button>
 
+
+            <!-- CLIENTE:
+                 o JS vai esconder a bolinha
+                 e colocar o botão de voltar -->
+
+            <button
+                class="btn-voltar-pesquisa"
+                type="button"
+                onclick="voltarParaPesquisa()"
+                style="display: none;"
+            >
+
+                ← Voltar à pesquisa
+
+            </button>
+
+
+            <!-- MENU DO PROFISSIONAL -->
 
             <div
                 class="menu-perfil-mensagens"
@@ -238,11 +378,15 @@
                 <div class="info-perfil-mensagens">
 
                     <strong id="nomePerfilMenu">
+
                         Profissional
+
                     </strong>
 
                     <span>
+
                         Profissional
+
                     </span>
 
                 </div>
@@ -253,7 +397,9 @@
                     type="button"
                     onclick="editarPerfilProfissional()"
                 >
-                    ✏️ Editar perfil
+
+                    ⚙️ Editar perfil
+
                 </button>
 
 
@@ -262,7 +408,9 @@
                     type="button"
                     onclick="editarPortfolio()"
                 >
+
                     🖼️ Editar portfólio
+
                 </button>
 
 
@@ -271,7 +419,9 @@
                     type="button"
                     onclick="sairContaProfissional()"
                 >
+
                     🚪 Sair
+
                 </button>
 
             </div>
@@ -285,18 +435,27 @@
 
 <main class="pagina-mensagens">
 
+
     <div class="titulo-mensagens">
 
         <div class="tag">
+
             💬 DEKKO • MENSAGENS
+
         </div>
 
+
         <h1>
+
             Suas <span>conversas.</span>
+
         </h1>
 
+
         <p>
+
             Converse diretamente com os clientes interessados no seu trabalho.
+
         </p>
 
     </div>
@@ -314,19 +473,18 @@
             <div class="topo-conversas">
 
                 <h2>
+
                     Conversas
+
                 </h2>
 
                 <span>
+
                     Seus clientes no Dekko
+
                 </span>
 
             </div>
-
-            <!--
-                O mensagens.js vai colocar
-                as conversas reais aqui.
-            -->
 
         </aside>
 
@@ -338,8 +496,6 @@
         <section class="chat">
 
 
-            <!-- TOPO DO CHAT -->
-
             <div class="topo-chat">
 
                 <div class="perfil-chat">
@@ -347,7 +503,9 @@
                     <div class="avatar-chat">
 
                         <span>
+
                             👤
+
                         </span>
 
                     </div>
@@ -356,11 +514,15 @@
                     <div>
 
                         <h2>
+
                             Selecione uma conversa
+
                         </h2>
 
                         <span>
+
                             Escolha um cliente para começar
+
                         </span>
 
                     </div>
@@ -369,10 +531,6 @@
 
             </div>
 
-
-            <!-- =========================
-                 MENSAGENS
-            ========================== -->
 
             <div class="mensagens-chat">
 
@@ -390,25 +548,29 @@
                             margin-bottom: 10px;
                         "
                     >
+
                         💬
+
                     </div>
 
+
                     <strong>
+
                         Selecione uma conversa
+
                     </strong>
 
+
                     <p>
+
                         Escolha um cliente ao lado para visualizar as mensagens.
+
                     </p>
 
                 </div>
 
             </div>
 
-
-            <!-- =========================
-                 CAMPO DE MENSAGEM
-            ========================== -->
 
             <form
                 class="campo-mensagem"
@@ -421,15 +583,17 @@
                     autocomplete="off"
                 >
 
+
                 <button
                     type="button"
                     aria-label="Enviar mensagem"
                 >
+
                     ➤
+
                 </button>
 
             </form>
-
 
         </section>
 
@@ -443,17 +607,15 @@
     © 2026
 
     <span>
+
         Dekko
+
     </span>
 
     — Encontre. Converse. Resolva.
 
 </footer>
 
-
-<!-- =========================
-     JS DA PÁGINA
-========================== -->
 
 <script src="../js/mensagens.js?v=1"></script>
 

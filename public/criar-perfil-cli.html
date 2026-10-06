@@ -7,9 +7,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dekko - Criar perfil de cliente</title>
+    <title>Dekko - Perfil de cliente</title>
 
-    <link rel="stylesheet" href="../css/style.css?v=18">
+    <link rel="stylesheet" href="../css/style.css?v=19">
 
 </head>
 
@@ -25,6 +25,7 @@
 
         <button
             class="btn-entrar"
+            id="btnVoltar"
             type="button"
             onclick="window.location.href='index.html'">
 
@@ -41,16 +42,16 @@
 
     <div class="titulo-pagina">
 
-        <div class="tag">
+        <div class="tag" id="tagPagina">
             👤 DEKKO • MEU PERFIL
         </div>
 
-        <h1>
+        <h1 id="tituloPagina">
             Crie seu <span>perfil.</span>
         </h1>
 
-        <p>
-            Adicione sua foto e seus dados para conversar com os profissionais.
+        <p id="subtituloPagina">
+            Adicione sua foto e o nome que você quer usar para conversar com os profissionais.
         </p>
 
     </div>
@@ -104,7 +105,7 @@
                 hidden>
 
 
-            <small>
+            <small id="avisoFoto">
                 A foto de perfil é obrigatória.
             </small>
 
@@ -136,66 +137,13 @@
 
             </div>
 
-
-
-            <div class="campo">
-
-                <label for="regiaoCliente">
-                    Região
-                </label>
-
-                <select
-                    id="regiaoCliente"
-                    name="regiao"
-                    required>
-
-                    <option value="">
-                        Selecione sua região
-                    </option>
-
-                    <option value="Paracambi">
-                        Paracambi
-                    </option>
-
-                    <option value="Japeri">
-                        Japeri
-                    </option>
-
-                    <option value="Queimados">
-                        Queimados
-                    </option>
-
-                    <option value="Seropédica">
-                        Seropédica
-                    </option>
-
-                </select>
-
-            </div>
-
-
-
-            <div class="campo">
-
-                <label for="telefoneCliente">
-                    Telefone
-                </label>
-
-                <input
-                    type="tel"
-                    id="telefoneCliente"
-                    name="telefone"
-                    placeholder="(21) 99999-9999"
-                    required>
-
-            </div>
-
         </section>
 
 
 
         <button
             class="btn-form btn-continuar"
+            id="btnSalvarPerfil"
             type="submit">
 
             Finalizar e buscar profissionais →
@@ -218,7 +166,7 @@
 
 <!-- JS DO PERFIL -->
 
-<script src="../js/criar-perfil-cli.js?v=2"></script>
+<script src="../js/criar-perfil-cli.js?v=3"></script>
 
 
 
