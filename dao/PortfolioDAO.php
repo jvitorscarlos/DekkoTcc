@@ -1,3 +1,4 @@
+
 <?php
 
 require_once "../config/database.php";
@@ -46,6 +47,21 @@ class PortfolioDAO
         $stmt = $this->conexao->prepare($sql);
 
         return $stmt->execute([
+            $idProfissional
+        ]);
+    }
+
+    // Exclui apenas uma foto específica do profissional.
+    public function excluirFotoPorId($idPortfolio, $idProfissional)
+    {
+        $sql = "DELETE FROM portfolio
+                WHERE id_portfolio = ?
+                AND id_profissional = ?";
+
+        $stmt = $this->conexao->prepare($sql);
+
+        return $stmt->execute([
+            $idPortfolio,
             $idProfissional
         ]);
     }

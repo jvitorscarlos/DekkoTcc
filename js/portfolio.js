@@ -1,299 +1,182 @@
-(function () {
 
-    const MINIMO = 3;
-    const MAXIMO = 6;
-    const TAMANHO_MAX_MB = 5;
-
+document.addEventListener("DOMContentLoaded", function () {
     const formulario = document.getElementById("formPortfolio");
-
-    if (!formulario) return;
-
-    const slots = document.querySelectorAll(".slot-foto");
+    const grade = document.getElementById("gradePortfolio");
     const contador = document.getElementById("pfContagem");
     const mensagem = document.getElementById("pfMensagem");
     const barra = document.getElementById("pfBarra");
-    const caixaErro = document.getElementById("pfErro");
-    const botaoFinalizar = document.getElementById("btnFinalizar");
+    const erro = document.getElementById("pfErro");
+    const botaoEnviar = document.getElementById("btnFinalizar");
 
+    if (!formulario || !grade) return;
 
-    function mostrarErro(texto) {
+    const slots = Array.from(grade.querySelectorAll(".slot-foto"));
+    const arquivosSelecionados = new Map();
 
-        if (!caixaErro) return;
-
-        caixaErro.textContent = texto;
-        caixaErro.classList.add("visivel");
-
-        setTimeout(function () {
-            caixaErro.classList.remove("visivel");
-        }, 4000);
-    }
-
-
-    function contarFotos() {
-
-        let total = 0;
-
-        slots.forEach(function (slot) {
-
-            const input = slot.querySelector("input[type='file']");
-
-            if (input && input.files.length > 0) {
-                total++;
-            }
-        });
-
-        return total;
-    }
-
-
-    function atualizarProgresso() {
-
-        const total = contarFotos();
+    function atualizarInterface() {
+        const quantidade = arquivosSelecionados.size;
 
         if (contador) {
-            contador.innerHTML =
-                total + " de " + MAXIMO +
-                "<small>fotos adicionadas</small>";
+            contador.textContent = `${quantidade}/6 fotos`;
         }
 
         if (barra) {
-            barra.style.width = ((total / MAXIMO) * 100) + "%";
+            barra.style.width = `${(quantidade / 6) * 100}%`;
         }
 
         if (mensagem) {
-
-            if (total === 0) {
-
-                mensagem.textContent = "Comece pela Foto 1 👇";
-
-            } else if (total < MINIMO) {
-
-                mensagem.textContent =
-                    "Adicione mais " + (MINIMO - total) + " foto(s).";
-
-            } else {
-
-                mensagem.textContent = "Tudo certo! Você pode finalizar.";
-            }
+            mensagem.textContent =
+                quantidade < 3
+                    ? `Adicione mais ${3 - quantidade} foto(s).`
+                    : "Você já pode salvar seu portfólio.";
         }
 
-        if (botaoFinalizar) {
-
-            botaoFinalizar.disabled = total < MINIMO;
-
-            // CORREÇÃO: o texto do botão acompanha a quantidade de fotos
-            if (total < MINIMO) {
-
-                const faltam = MINIMO - total;
-
-                botaoFinalizar.textContent =
-                    "Adicione mais " + faltam +
-                    (faltam === 1 ? " foto" : " fotos") +
-                    " para continuar";
-
-            } else {
-
-                botaoFinalizar.textContent = "Finalizar portfólio";
-            }
+        if (botaoEnviar) {
+            botaoEnviar.disabled = quantidade < 3 || quantidade > 6;
         }
     }
 
-
-    function preencherSlot(slot, arquivo) {
-
-        const input = slot.querySelector("input[type='file']");
-
-        if (!arquivo || !arquivo.type.startsWith("image/")) {
-
-            mostrarErro("Selecione apenas imagens.");
-
-            return;
+    function mostrarErro(texto) {
+        if (erro) {
+            erro.textContent = texto;
+            erro.style.display = "block";
         }
-
-        const tamanhoMB = arquivo.size / (1024 * 1024);
-
-        if (tamanhoMB > TAMANHO_MAX_MB) {
-
-            mostrarErro("A imagem deve ter no máximo 5 MB.");
-
-            input.value = "";
-
-            return;
-        }
-
-        const leitor = new FileReader();
-
-        leitor.onload = function (evento) {
-
-            const imagemAntiga = slot.querySelector(".preview-foto");
-
-            if (imagemAntiga) {
-                imagemAntiga.remove();
-            }
-
-            const imagem = document.createElement("img");
-
-            imagem.src = evento.target.result;
-            imagem.className = "preview-foto";
-
-            slot.appendChild(imagem);
-
-            let botaoRemover = slot.querySelector(".btn-remover-foto");
-
-            if (!botaoRemover) {
-
-                botaoRemover = document.createElement("button");
-
-                botaoRemover.type = "button";
-                botaoRemover.className = "btn-remover-foto";
-                botaoRemover.innerHTML = "×";
-                botaoRemover.title = "Remover foto";
-
-                botaoRemover.style.display = "block";
-                botaoRemover.style.position = "absolute";
-                botaoRemover.style.top = "8px";
-                botaoRemover.style.right = "8px";
-                botaoRemover.style.zIndex = "999";
-                botaoRemover.style.cursor = "pointer";
-                botaoRemover.style.width = "28px";
-                botaoRemover.style.height = "28px";
-                botaoRemover.style.border = "none";
-                botaoRemover.style.borderRadius = "50%";
-                botaoRemover.style.background = "rgba(0, 0, 0, 0.7)";
-                botaoRemover.style.color = "white";
-                botaoRemover.style.fontSize = "20px";
-                botaoRemover.style.fontWeight = "bold";
-                botaoRemover.style.lineHeight = "28px";
-                botaoRemover.style.padding = "0";
-
-                botaoRemover.addEventListener("click", function (evento) {
-
-                    evento.preventDefault();
-                    evento.stopPropagation();
-
-                    limparSlot(slot);
-                });
-
-                slot.appendChild(botaoRemover);
-            }
-
-            slot.classList.add("preenchido");
-
-            atualizarProgresso();
-        };
-
-        leitor.readAsDataURL(arquivo);
     }
 
+    function limparErro() {
+        if (erro) {
+            erro.textContent = "";
+            erro.style.display = "none";
+        }
+    }
+
+    function atualizarSlot(slot, arquivo) {
+        const conteudo = slot.querySelector(".slot-conteudo");
+
+        if (!conteudo) return;
+
+        const imagem = document.createElement("img");
+        imagem.src = URL.createObjectURL(arquivo);
+        imagem.alt = "Prévia da foto do portfólio";
+        imagem.style.width = "100%";
+        imagem.style.height = "100%";
+        imagem.style.objectFit = "cover";
+
+        conteudo.replaceChildren(imagem);
+        slot.classList.add("com-foto");
+
+        const trocar = slot.querySelector(".pf-trocar");
+        if (trocar) trocar.style.display = "block";
+    }
 
     function limparSlot(slot) {
+        const conteudo = slot.querySelector(".slot-conteudo");
+        const input = slot.querySelector('input[type="file"]');
 
-        const input = slot.querySelector("input[type='file']");
-        const imagem = slot.querySelector(".preview-foto");
-        const botaoRemover = slot.querySelector(".btn-remover-foto");
+        if (conteudo) {
+            conteudo.innerHTML = "";
+        }
 
-        if (input) input.value = "";
-        if (imagem) imagem.remove();
-        if (botaoRemover) botaoRemover.remove();
+        if (input) {
+            input.value = "";
+        }
 
-        slot.classList.remove("preenchido");
+        slot.classList.remove("com-foto");
 
-        atualizarProgresso();
+        const trocar = slot.querySelector(".pf-trocar");
+        if (trocar) trocar.style.display = "none";
     }
 
-
-    slots.forEach(function (slot) {
-
-        const input = slot.querySelector("input[type='file']");
+    slots.forEach(function (slot, indice) {
+        const input = slot.querySelector('input[type="file"]');
+        const remover = slot.querySelector(".pf-remover");
 
         if (!input) return;
 
         input.addEventListener("change", function () {
+            limparErro();
 
-            if (input.files.length === 0) {
+            const arquivo = input.files[0];
+
+            if (!arquivo) return;
+
+            if (!arquivo.type.startsWith("image/")) {
+                mostrarErro("Selecione um arquivo de imagem.");
+                input.value = "";
                 return;
             }
 
-            preencherSlot(slot, input.files[0]);
+            if (arquivo.size > 5 * 1024 * 1024) {
+                mostrarErro("Cada imagem deve ter no máximo 5 MB.");
+                input.value = "";
+                return;
+            }
+
+            arquivosSelecionados.set(indice, arquivo);
+            atualizarSlot(slot, arquivo);
+            atualizarInterface();
         });
+
+        if (remover) {
+            remover.addEventListener("click", function (evento) {
+                evento.preventDefault();
+                evento.stopPropagation();
+
+                arquivosSelecionados.delete(indice);
+                limparSlot(slot);
+                limparErro();
+                atualizarInterface();
+            });
+        }
     });
 
-
-    formulario.addEventListener("submit", function (evento) {
-
+    formulario.addEventListener("submit", async function (evento) {
         evento.preventDefault();
+        limparErro();
 
-        const total = contarFotos();
+        const quantidade = arquivosSelecionados.size;
 
-        if (total < MINIMO) {
-
-            mostrarErro(
-                "Você precisa adicionar pelo menos " + MINIMO + " fotos."
-            );
-
+        if (quantidade < 3 || quantidade > 6) {
+            mostrarErro("Adicione entre 3 e 6 fotos.");
             return;
         }
 
         const dados = new FormData();
 
-        slots.forEach(function (slot) {
-
-            const input = slot.querySelector("input[type='file']");
-
-            if (input && input.files.length > 0) {
-                dados.append("portfolio[]", input.files[0]);
-            }
+        arquivosSelecionados.forEach(function (arquivo) {
+            dados.append("portfolio[]", arquivo);
         });
 
-        botaoFinalizar.disabled = true;
-        botaoFinalizar.textContent = "Salvando portfólio...";
+        botaoEnviar.disabled = true;
+        botaoEnviar.textContent = "Salvando...";
 
-        fetch("../routes/portfolio.php?acao=adicionar", {
-            method: "POST",
-            body: dados
-        })
-            .then(function (resposta) {
-                return resposta.json();
-            })
-            .then(function (resultado) {
-
-                console.log("Resposta do portfólio:", resultado);
-
-                if (!resultado.sucesso) {
-
-                    mostrarErro(
-                        resultado.mensagem ||
-                        "Não foi possível salvar o portfólio."
-                    );
-
-                    atualizarProgresso();
-
-                    return;
+        try {
+            const resposta = await fetch(
+                "../routes/portfolio.php?acao=adicionar",
+                {
+                    method: "POST",
+                    body: dados
                 }
+            );
 
-                const caixaSucesso = document.getElementById("pfSucesso");
+            const resultado = await resposta.json();
 
-                if (caixaSucesso) {
-                    caixaSucesso.classList.add("visivel");
-                }
-
-                alert(resultado.mensagem);
-
-                window.location.href = "mensagens.html";
-            })
-            .catch(function (erro) {
-
-                console.log("Erro ao salvar portfólio:", erro);
-
-                mostrarErro(
-                    "Erro ao salvar o portfólio. Veja o Console (F12)."
+            if (!resposta.ok || !resultado.sucesso) {
+                throw new Error(
+                    resultado.mensagem || "Não foi possível salvar as fotos."
                 );
+            }
 
-                atualizarProgresso();
-            });
+            alert(resultado.mensagem || "Portfólio salvo com sucesso!");
+
+            window.location.reload();
+
+        } catch (erroEnvio) {
+            mostrarErro(erroEnvio.message);
+            botaoEnviar.disabled = false;
+            botaoEnviar.textContent = "Finalizar";
+        }
     });
 
-
-    atualizarProgresso();
-
-})();
+    atualizarInterface();
+});

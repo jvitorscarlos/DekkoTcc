@@ -1,3 +1,4 @@
+
 <?php
 
 require_once "../config/database.php";
@@ -23,12 +24,6 @@ class ProfissionalDAO
         try {
 
             $this->conexao->beginTransaction();
-
-            /*
-            =========================================
-            1. CADASTRA O PROFISSIONAL
-            =========================================
-            */
 
             $sql = "INSERT INTO profissional
                     (
@@ -58,10 +53,9 @@ class ProfissionalDAO
 
             $profissionalId = $this->conexao->lastInsertId();
 
-
             /*
             =========================================
-            2. CADASTRA OS SERVIÇOS
+            CADASTRAR OS SERVIÇOS
             =========================================
             */
 
@@ -73,11 +67,6 @@ class ProfissionalDAO
                     continue;
                 }
 
-
-                /*
-                Procura se o serviço já existe.
-                */
-
                 $sql = "SELECT id_servico
                         FROM servico
                         WHERE nome = ?";
@@ -85,13 +74,7 @@ class ProfissionalDAO
                 $stmt = $this->conexao->prepare($sql);
                 $stmt->execute([$servico]);
 
-                $servicoExistente =
-                    $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-                /*
-                Se não existir, cria.
-                */
+                $servicoExistente = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if (!$servicoExistente) {
 
@@ -103,8 +86,7 @@ class ProfissionalDAO
                             )
                             VALUES (?, ?, ?)";
 
-                    $stmt =
-                        $this->conexao->prepare($sql);
+                    $stmt = $this->conexao->prepare($sql);
 
                     $stmt->execute([
                         $servico,
@@ -112,21 +94,12 @@ class ProfissionalDAO
                         "Outros"
                     ]);
 
-                    $servicoId =
-                        $this->conexao->lastInsertId();
+                    $servicoId = $this->conexao->lastInsertId();
 
                 } else {
 
-                    $servicoId =
-                        $servicoExistente["id_servico"];
+                    $servicoId = $servicoExistente["id_servico"];
                 }
-
-
-                /*
-                =========================================
-                3. LIGA PROFISSIONAL AO SERVIÇO
-                =========================================
-                */
 
                 $sql = "INSERT INTO profissional_servico
                         (
@@ -135,21 +108,13 @@ class ProfissionalDAO
                         )
                         VALUES (?, ?)";
 
-                $stmt =
-                    $this->conexao->prepare($sql);
+                $stmt = $this->conexao->prepare($sql);
 
                 $stmt->execute([
                     $profissionalId,
                     $servicoId
                 ]);
             }
-
-
-            /*
-            =========================================
-            4. FINALIZA
-            =========================================
-            */
 
             $this->conexao->commit();
 
@@ -165,7 +130,6 @@ class ProfissionalDAO
         }
     }
 
-
     /*
     =========================================
     BUSCAR POR EMAIL
@@ -178,14 +142,11 @@ class ProfissionalDAO
                 FROM profissional
                 WHERE email = ?";
 
-        $stmt =
-            $this->conexao->prepare($sql);
-
+        $stmt = $this->conexao->prepare($sql);
         $stmt->execute([$email]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
 
     /*
     =========================================
@@ -203,8 +164,10 @@ class ProfissionalDAO
                     p.endereco,
                     p.foto,
                     p.biografia,
+                    p.rede_social,
                     p.id_regiao,
                     r.nome AS regiao,
+
                     GROUP_CONCAT(
                         s.nome
                         SEPARATOR ', '
@@ -216,25 +179,20 @@ class ProfissionalDAO
                     ON p.id_regiao = r.id_regiao
 
                 LEFT JOIN profissional_servico ps
-                    ON p.id_profissional =
-                       ps.id_profissional
+                    ON p.id_profissional = ps.id_profissional
 
                 LEFT JOIN servico s
-                    ON ps.id_servico =
-                       s.id_servico
+                    ON ps.id_servico = s.id_servico
 
                 WHERE p.id_profissional = ?
 
                 GROUP BY p.id_profissional";
 
-        $stmt =
-            $this->conexao->prepare($sql);
-
+        $stmt = $this->conexao->prepare($sql);
         $stmt->execute([$id]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
 
     /*
     =========================================
@@ -242,11 +200,8 @@ class ProfissionalDAO
     =========================================
     */
 
-    public function listarTodos(
-        $servico = "",
-        $regiao = ""
-    ) {
-
+    public function listarTodos($servico = "", $regiao = "")
+    {
         $sql = "SELECT
                     p.id_profissional,
                     p.nome,
@@ -257,6 +212,7 @@ class ProfissionalDAO
                     p.biografia,
                     p.id_regiao,
                     r.nome AS regiao,
+
                     GROUP_CONCAT(
                         s.nome
                         SEPARATOR ', '
@@ -265,63 +221,35 @@ class ProfissionalDAO
                 FROM profissional p
 
                 LEFT JOIN regiao r
-                    ON p.id_regiao =
-                       r.id_regiao
+                    ON p.id_regiao = r.id_regiao
 
                 LEFT JOIN profissional_servico ps
-                    ON p.id_profissional =
-                       ps.id_profissional
+                    ON p.id_profissional = ps.id_profissional
 
                 LEFT JOIN servico s
-                    ON ps.id_servico =
-                       s.id_servico
+                    ON ps.id_servico = s.id_servico
 
                 WHERE 1 = 1";
 
         $parametros = [];
 
-
-        /*
-        =========================================
-        FILTRO POR SERVIÇO
-        =========================================
-        */
-
         if (!empty($servico)) {
-
             $sql .= " AND s.nome LIKE ?";
-
-            $parametros[] =
-                "%" . $servico . "%";
+            $parametros[] = "%" . $servico . "%";
         }
-
-
-        /*
-        =========================================
-        FILTRO POR REGIÃO
-        =========================================
-        */
 
         if (!empty($regiao)) {
-
             $sql .= " AND r.nome = ?";
-
-            $parametros[] =
-                $regiao;
+            $parametros[] = $regiao;
         }
-
 
         $sql .= " GROUP BY p.id_profissional";
 
-
-        $stmt =
-            $this->conexao->prepare($sql);
-
+        $stmt = $this->conexao->prepare($sql);
         $stmt->execute($parametros);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 
     /*
     =========================================
@@ -336,7 +264,8 @@ class ProfissionalDAO
         $endereco,
         $biografia,
         $idRegiao,
-        $foto
+        $foto,
+        $redeSocial
     ) {
 
         $sql = "UPDATE profissional
@@ -346,11 +275,12 @@ class ProfissionalDAO
                     biografia = ?,
                     id_regiao = ?,
                     foto = ?,
+                    rede_social = ?,
                     perfil_completo = 1
+
                 WHERE id_profissional = ?";
 
-        $stmt =
-            $this->conexao->prepare($sql);
+        $stmt = $this->conexao->prepare($sql);
 
         return $stmt->execute([
             $nome,
@@ -359,6 +289,7 @@ class ProfissionalDAO
             $biografia,
             $idRegiao,
             $foto,
+            $redeSocial,
             $idProfissional
         ]);
     }

@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dekko - Editar Portfólio</title>
+
+    <link rel="stylesheet" href="../css/style.css?v=17">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        De<span>kko</span>
+    </div>
+
+    <div class="menu">
+        <button
+            class="btn-entrar"
+            type="button"
+            onclick="window.location.href='mensagens.html'"
+        >
+            ← Voltar
+        </button>
+    </div>
+</header>
+
+<main class="pagina-portfolio">
+
+    <!-- ETAPAS -->
+
+    <div class="pf-etapas" aria-label="Etapas do portfólio">
+
+        <div class="pf-etapa feita">
+            <span>✓</span>
+            Perfil
+        </div>
+
+        <div class="pf-linha feita"></div>
+
+        <div class="pf-etapa atual">
+            <span>2</span>
+            Portfólio
+        </div>
+
+        <div class="pf-linha"></div>
+
+        <div class="pf-etapa">
+            <span>3</span>
+            Pronto
+        </div>
+
+    </div>
+
+    <div class="titulo-pagina">
+
+        <div class="tag">
+            📸 DEKKO • PORTFÓLIO
+        </div>
+
+        <h1>
+            Edite seu <span>trabalho.</span>
+        </h1>
+
+        <p>
+            Atualize as fotos dos seus serviços para os clientes
+            conhecerem melhor o seu trabalho. Elas aparecem no
+            seu perfil profissional.
+        </p>
+
+    </div>
+
+    <form
+        class="formulario-portfolio"
+        id="formEditarPortfolio"
+        enctype="multipart/form-data"
+    >
+
+        <div class="pf-topo">
+
+            <h2>Suas fotos</h2>
+
+            <p>
+                Clique em um quadrado para escolher ou trocar uma foto.
+                Adicione <strong>pelo menos 3</strong> (até 6).
+            </p>
+
+        </div>
+
+        <!-- PROGRESSO -->
+
+        <div class="pf-progresso" aria-live="polite">
+
+            <div class="pf-progresso-topo">
+
+                <div class="pf-contagem" id="pfContagem">
+                    Carregando...
+                    <small>fotos adicionadas</small>
+                </div>
+
+                <div class="pf-mensagem" id="pfMensagem">
+                    Aguarde enquanto carregamos suas fotos.
+                </div>
+
+            </div>
+
+            <div class="pf-barra">
+                <div
+                    class="pf-barra-preenchida"
+                    id="pfBarra"
+                ></div>
+            </div>
+
+        </div>
+
+        <!-- FOTOS -->
+
+        <div class="grade-portfolio" id="gradePortfolio">
+
+            <!-- Os seis espaços serão preenchidos pelo JavaScript -->
+
+        </div>
+
+        <div
+            class="pf-erro"
+            id="pfErro"
+            role="alert"
+        ></div>
+
+        <button
+            class="btn-form btn-finalizar"
+            id="btnSalvarPortfolio"
+            type="submit"
+        >
+            Salvar alterações
+        </button>
+
+    </form>
+
+</main>
+
+<footer>
+    © 2026
+    <span>Dekko</span>
+    — Encontre. Converse. Resolva.
+</footer>
+
+<script src="../js/editar-portfolio.js?v=2"></script>
+
+<!-- VLibras -->
+
+<div vw class="enabled">
+
+    <div vw-access-button class="active"></div>
+
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+
+</div>
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+<script>
+    new window.VLibras.Widget("https://vlibras.gov.br/app");
+</script>
+
+</body>
+</html>

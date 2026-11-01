@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dekko - Editar perfil</title>
+
+    <link rel="stylesheet" href="../css/editar-perfil-pro.css">
+</head>
+<body>
+
+    <main class="criar-perfil">
+
+        <h1>Editar perfil</h1>
+        <p>Atualize suas informações profissionais.</p>
+
+        <form id="formEditarPerfil">
+
+            <div class="foto-container">
+                <div id="avatarPreview" class="avatar-preview">
+                    👤
+                </div>
+
+                <label for="fotoPerfil">Alterar foto de perfil</label>
+                <input
+                    type="file"
+                    id="fotoPerfil"
+                    name="foto_perfil"
+                    accept="image/*"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="nomePerfil">Nome profissional</label>
+                <input
+                    type="text"
+                    id="nomePerfil"
+                    name="nome"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="bio">Biografia</label>
+                <textarea
+                    id="bio"
+                    name="biografia"
+                    placeholder="Conte um pouco sobre seu trabalho..."
+                ></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="redeSocial">Rede social ou contato</label>
+                <input
+                    type="text"
+                    id="redeSocial"
+                    name="rede_social"
+                    placeholder="Instagram, Facebook..."
+                >
+            </div>
+
+            <button type="submit" id="btnSalvar">
+                Salvar alterações
+            </button>
+
+            <button type="button" id="btnVoltar">
+                Voltar às mensagens
+            </button>
+
+        </form>
+
+    </main>
+
+    <script src="../js/editar-perfil-pro.js"></script>
+
+</body>
+</html>

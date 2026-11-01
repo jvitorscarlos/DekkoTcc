@@ -1,8 +1,10 @@
+
 <?php
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-header("Content-Type: text/plain");
+header("Content-Type: application/json; charset=UTF-8");
+
 require_once "../controller/PortfolioController.php";
 
 $acao = $_GET["acao"] ?? "";
@@ -20,6 +22,10 @@ if ($acao === "adicionar") {
 } elseif ($acao === "listarPorId") {
 
     $controller->listarPorId();
+
+} elseif ($acao === "atualizar") {
+
+    $controller->atualizar();
 
 } else {
 

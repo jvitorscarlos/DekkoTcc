@@ -1,3 +1,4 @@
+
 <?php
 
 header("Content-Type: application/json");
@@ -22,6 +23,9 @@ if ($acao === "criar") {
 
 } elseif ($acao === "encerrar") {
     $controller->encerrar();
+
+} elseif ($acao === "reabrir") {
+    $controller->reabrir();
 
 } else {
     echo json_encode([

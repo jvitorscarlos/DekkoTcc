@@ -1,3 +1,4 @@
+
 <?php
 
 require_once "../dao/ConversaDAO.php";
@@ -61,10 +62,9 @@ class ConversaController
 
         $idProfissional = $_SESSION["profissional_id"];
 
-        $conversas =
-            $this->dao->listarPorProfissional(
-                $idProfissional
-            );
+        $conversas = $this->dao->listarPorProfissional(
+            $idProfissional
+        );
 
         echo json_encode([
             "sucesso" => true,
@@ -87,10 +87,9 @@ class ConversaController
 
         $idCliente = $_SESSION["cliente_id"];
 
-        $conversas =
-            $this->dao->listarPorCliente(
-                $idCliente
-            );
+        $conversas = $this->dao->listarPorCliente(
+            $idCliente
+        );
 
         echo json_encode([
             "sucesso" => true,
@@ -124,10 +123,7 @@ class ConversaController
             return;
         }
 
-        $conversa =
-            $this->dao->buscarPorId(
-                $idConversa
-            );
+        $conversa = $this->dao->buscarPorId($idConversa);
 
         if (!$conversa) {
             echo json_encode([
@@ -171,14 +167,70 @@ class ConversaController
     }
 
     // Encerra uma conversa
+    // Permite que cliente ou profissional encerre sua própria conversa
     public function encerrar()
     {
         session_start();
 
-        if (!isset($_SESSION["profissional_id"])) {
+        $idConversa = $_POST["id_conversa"] ?? null;
+
+        if (!$idConversa) {
             echo json_encode([
                 "sucesso" => false,
-                "mensagem" => "Profissional não está logado."
+                "mensagem" => "Conversa não informada."
+            ]);
+            return;
+        }
+
+        $temAcesso = false;
+
+        if (
+            isset($_SESSION["cliente_id"]) &&
+            $this->dao->pertenceAoCliente(
+                $idConversa,
+                $_SESSION["cliente_id"]
+            )
+        ) {
+            $temAcesso = true;
+        }
+
+        if (
+            isset($_SESSION["profissional_id"]) &&
+            $this->dao->pertenceAoProfissional(
+                $idConversa,
+                $_SESSION["profissional_id"]
+            )
+        ) {
+            $temAcesso = true;
+        }
+
+        if (!$temAcesso) {
+            echo json_encode([
+                "sucesso" => false,
+                "mensagem" => "Você não participa desta conversa."
+            ]);
+            return;
+        }
+
+        $resultado = $this->dao->encerrar($idConversa);
+
+        echo json_encode([
+            "sucesso" => $resultado,
+            "mensagem" => $resultado
+                ? "Conversa encerrada."
+                : "Não foi possível encerrar a conversa."
+        ]);
+    }
+
+    // Reabre uma conversa para o cliente
+    public function reabrir()
+    {
+        session_start();
+
+        if (!isset($_SESSION["cliente_id"])) {
+            echo json_encode([
+                "sucesso" => false,
+                "mensagem" => "Cliente não está logado."
             ]);
             return;
         }
@@ -194,9 +246,9 @@ class ConversaController
         }
 
         if (
-            !$this->dao->pertenceAoProfissional(
+            !$this->dao->pertenceAoCliente(
                 $idConversa,
-                $_SESSION["profissional_id"]
+                $_SESSION["cliente_id"]
             )
         ) {
             echo json_encode([
@@ -206,16 +258,13 @@ class ConversaController
             return;
         }
 
-        $resultado =
-            $this->dao->encerrar(
-                $idConversa
-            );
+        $resultado = $this->dao->reabrir($idConversa);
 
         echo json_encode([
             "sucesso" => $resultado,
             "mensagem" => $resultado
-                ? "Conversa encerrada."
-                : "Não foi possível encerrar a conversa."
+                ? "Conversa reaberta com sucesso!"
+                : "Não foi possível reabrir a conversa."
         ]);
     }
 }

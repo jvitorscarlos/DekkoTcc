@@ -3250,3 +3250,264 @@ html {
 .pf-remover {
     display: none !important;
 }
+.confirmacao-servico {
+    width: min(92%, 520px);
+    margin: 18px auto;
+    padding: 22px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-left: 5px solid #ffb900;
+    border-radius: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.confirmacao-servico:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.11);
+}
+
+.icone-confirmacao {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 14px;
+    background: #fff5d6;
+    color: #a87500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+
+.conteudo-confirmacao {
+    flex: 1;
+    min-width: 0;
+}
+
+.titulo-confirmacao {
+    display: block;
+    color: #171717;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.4;
+    margin-bottom: 7px;
+}
+
+.conteudo-confirmacao p {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0 0 13px;
+}
+
+.status-confirmacao {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 11px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    background: #fff6dc;
+    color: #9a6b00;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.bolinha-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* BOTÕES */
+
+.acoes-confirmacao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 5px;
+}
+
+.btn-confirmar-servico,
+.btn-recusar-servico {
+    min-height: 39px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+    transition: 0.2s;
+}
+
+.btn-confirmar-servico {
+    background: #ffb900;
+    color: #171717;
+}
+
+.btn-confirmar-servico:hover {
+    background: #ffd044;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 185, 0, 0.25);
+}
+
+.btn-recusar-servico {
+    background: #f1f1f1;
+    color: #555;
+}
+
+.btn-recusar-servico:hover {
+    background: #e5e5e5;
+    color: #222;
+}
+
+/* ESTADO PENDENTE */
+
+.status-confirmacao:not(.confirmado):not(.recusado) {
+    background: #fff6dc;
+    color: #9a6b00;
+}
+
+/* ESTADO CONFIRMADO */
+
+.status-confirmacao.confirmado {
+    background: #e8f7ec;
+    color: #21843a;
+}
+
+.status-confirmacao.confirmado .bolinha-status {
+    background: #2eaa50;
+}
+
+.confirmacao-servico:has(.status-confirmacao.confirmado) {
+    border-left-color: #2eaa50;
+}
+
+.confirmacao-servico:has(.status-confirmacao.confirmado) .icone-confirmacao {
+    background: #e8f7ec;
+    color: #21843a;
+}
+
+/* ESTADO RECUSADO */
+
+.status-confirmacao.recusado {
+    background: #fff0f0;
+    color: #bd3838;
+}
+
+.status-confirmacao.recusado .bolinha-status {
+    background: #d64545;
+}
+
+.confirmacao-servico:has(.status-confirmacao.recusado) {
+    border-left-color: #d64545;
+}
+
+.confirmacao-servico:has(.status-confirmacao.recusado) .icone-confirmacao {
+    background: #fff0f0;
+    color: #bd3838;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 550px) {
+    .confirmacao-servico {
+        width: 100%;
+        padding: 15px;
+        gap: 11px;
+    }
+
+    .icone-confirmacao {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 19px;
+    }
+
+    .titulo-confirmacao {
+        font-size: 14px;
+    }
+
+    .conteudo-confirmacao p {
+        font-size: 12px;
+    }
+
+    .acoes-confirmacao {
+        flex-direction: column;
+    }
+
+    .btn-confirmar-servico,
+    .btn-recusar-servico {
+        width: 100%;
+    }
+}
+/* ===== CARDS DE CONFIRMAÇÃO ===== */
+
+.cartao-confirmacao {
+    background: linear-gradient(135deg, #fff3bd, #ffe08a);
+    border: 2px solid #ffb900;
+    border-left: 7px solid #e69500;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin: 15px 0;
+    color: #29200b;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    animation: aparecerCard 0.25s ease;
+}
+
+.cartao-confirmacao h3,
+.cartao-confirmacao h4 {
+    color: #8a4b00;
+    font-size: 17px;
+    font-weight: 800;
+    margin: 0 0 9px;
+}
+
+.cartao-confirmacao p {
+    color: #382b13;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 6px 0;
+}
+
+.cartao-confirmacao button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 10px 6px 0 0;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cartao-confirmacao button:hover {
+    filter: brightness(0.92);
+    transform: translateY(-1px);
+}
+
+/* Botão principal */
+.cartao-confirmacao button:first-of-type {
+    background: #e69500;
+    color: #fff;
+}
+
+/* Outros botões */
+.cartao-confirmacao button + button {
+    background: #292929;
+    color: #fff;
+}
+
+/* Animação */
+@keyframes aparecerCard {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

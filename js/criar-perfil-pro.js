@@ -1,17 +1,13 @@
 function mostrarFotoPerfil(event) {
 
-    const arquivo =
-        event.target.files[0];
+    const arquivo = event.target.files[0];
 
     if (!arquivo) {
         return;
     }
 
-    const preview =
-        document.getElementById("avatarPreview");
-
-    const leitor =
-        new FileReader();
+    const preview = document.getElementById("avatarPreview");
+    const leitor = new FileReader();
 
     leitor.onload = function (e) {
 
@@ -31,14 +27,10 @@ function irParaPortfolio(event) {
 
     event.preventDefault();
 
-    const foto =
-        document.getElementById("fotoPerfil");
-
-    const nome =
-        document.getElementById("nomePerfil");
-
-    const bio =
-        document.getElementById("bio");
+    const foto = document.getElementById("fotoPerfil");
+    const nome = document.getElementById("nomePerfil");
+    const bio = document.getElementById("bio");
+    const redeSocial = document.getElementById("redeSocial");
 
 
     /*
@@ -47,14 +39,9 @@ function irParaPortfolio(event) {
     =========================================
     */
 
-    if (
-        !foto ||
-        foto.files.length === 0
-    ) {
+    if (!foto || foto.files.length === 0) {
 
-        alert(
-            "Escolha uma foto de perfil para continuar."
-        );
+        alert("Escolha uma foto de perfil para continuar.");
 
         return;
     }
@@ -66,17 +53,13 @@ function irParaPortfolio(event) {
     =========================================
     */
 
-    const arquivo =
-        foto.files[0];
-
-    const leitor =
-        new FileReader();
+    const arquivo = foto.files[0];
+    const leitor = new FileReader();
 
 
     leitor.onload = function (e) {
 
-        const dados =
-            new FormData();
+        const dados = new FormData();
 
 
         /*
@@ -85,15 +68,15 @@ function irParaPortfolio(event) {
         =========================================
         */
 
-        dados.append(
-            "nome",
-            nome.value
-        );
+        dados.append("nome", nome.value.trim());
+
+        dados.append("biografia", bio.value.trim());
 
         dados.append(
-            "biografia",
-            bio.value
+            "rede_social",
+            redeSocial ? redeSocial.value.trim() : ""
         );
+
 
         /*
         O endereço e a região já foram
@@ -107,10 +90,7 @@ function irParaPortfolio(event) {
         =========================================
         */
 
-        dados.append(
-            "foto",
-            e.target.result
-        );
+        dados.append("foto", e.target.result);
 
 
         /*
@@ -143,9 +123,7 @@ function irParaPortfolio(event) {
 
                 if (!resultado.sucesso) {
 
-                    alert(
-                        resultado.mensagem
-                    );
+                    alert(resultado.mensagem);
 
                     return;
                 }
@@ -157,17 +135,14 @@ function irParaPortfolio(event) {
                 =========================================
                 */
 
-                alert(
-                    resultado.mensagem
-                );
+                alert(resultado.mensagem);
 
 
                 /*
                 Agora vai para o portfólio.
                 */
 
-                window.location.href =
-                    "portfolio.html";
+                window.location.href = "portfolio.html";
 
             })
 

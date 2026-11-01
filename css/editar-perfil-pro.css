@@ -1,0 +1,211 @@
+/* =================================
+   EDITAR PERFIL PROFISSIONAL - DEKKO
+================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px;
+    background:
+        radial-gradient(circle at 85% 15%, rgba(255, 185, 0, 0.18), transparent 35%),
+        #151515;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.criar-perfil {
+    width: 100%;
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 0;
+}
+
+.criar-perfil h1 {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 38px;
+    text-align: center;
+}
+
+.criar-perfil > p {
+    margin-bottom: 30px;
+    color: #bbb;
+    text-align: center;
+    font-size: 16px;
+}
+
+#formEditarPerfil {
+    padding: 35px;
+    background: #fff;
+    color: #111;
+    border-top: 6px solid #ffb900;
+    border-radius: 20px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* FOTO */
+
+.foto-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.avatar-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 145px;
+    height: 145px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    border: 5px solid #ffb900;
+    border-radius: 50%;
+    background: #fff3c4;
+    color: #111;
+    font-size: 55px;
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.foto-container label {
+    padding: 12px 22px;
+    border-radius: 9px;
+    background: #111;
+    color: #ffb900;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.foto-container label:hover {
+    background: #ffb900;
+    color: #111;
+}
+
+#fotoPerfil {
+    max-width: 100%;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #555;
+}
+
+/* CAMPOS */
+
+#formEditarPerfil .campo {
+    margin-bottom: 22px;
+}
+
+#formEditarPerfil .campo label {
+    display: block;
+    margin-bottom: 8px;
+    color: #222;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#formEditarPerfil .campo input,
+#formEditarPerfil .campo textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    background: #fafafa;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+#formEditarPerfil .campo input:focus,
+#formEditarPerfil .campo textarea:focus {
+    border-color: #ffb900;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 185, 0, 0.15);
+}
+
+#formEditarPerfil .campo textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+/* BOTÕES */
+
+#btnSalvar,
+#btnVoltar {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#btnSalvar {
+    margin-top: 8px;
+    background: #ffb900;
+    color: #111;
+}
+
+#btnSalvar:hover {
+    background: #ffd43b;
+    transform: translateY(-2px);
+}
+
+#btnSalvar:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    transform: none;
+}
+
+#btnVoltar {
+    margin-top: 12px;
+    background: #eee;
+    color: #444;
+}
+
+#btnVoltar:hover {
+    background: #ddd;
+}
+
+/* CELULAR */
+
+@media (max-width: 600px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .criar-perfil {
+        margin: 15px auto;
+    }
+
+    .criar-perfil h1 {
+        font-size: 30px;
+    }
+
+    #formEditarPerfil {
+        padding: 25px 18px;
+    }
+
+    .avatar-preview {
+        width: 125px;
+        height: 125px;
+    }
+}
+#fotoPerfil {
+    display: none;
+}
