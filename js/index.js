@@ -1,3 +1,4 @@
+
 /* ========================================= */
 /* DEKKO - INDEX.JS                          */
 /* Login, cadastro e modais da página inicial */
@@ -69,8 +70,7 @@ function abrirCliente() {
 function abrirProfissional() {
     fechar();
 
-    let profissional =
-        document.getElementById("profissional");
+    let profissional = document.getElementById("profissional");
 
     if (profissional) {
         profissional.classList.add("ativo");
@@ -83,14 +83,9 @@ function abrirProfissional() {
 /* ========================================= */
 
 function verificarOutroServico() {
-    let checkboxOutro =
-        document.getElementById("checkboxOutro");
-
-    let outro =
-        document.getElementById("outro");
-
-    let campo =
-        document.getElementById("outroServico");
+    let checkboxOutro = document.getElementById("checkboxOutro");
+    let outro = document.getElementById("outro");
+    let campo = document.getElementById("outroServico");
 
     if (!checkboxOutro || !outro || !campo) {
         return;
@@ -114,8 +109,7 @@ function verificarOutroServico() {
 function abrirLoginCliente() {
     fechar();
 
-    let loginCliente =
-        document.getElementById("loginCliente");
+    let loginCliente = document.getElementById("loginCliente");
 
     if (loginCliente) {
         loginCliente.classList.add("ativo");
@@ -130,8 +124,7 @@ function abrirLoginCliente() {
 function abrirLoginProfissional() {
     fechar();
 
-    let loginProfissional =
-        document.getElementById("loginProfissional");
+    let loginProfissional = document.getElementById("loginProfissional");
 
     if (loginProfissional) {
         loginProfissional.classList.add("ativo");
@@ -148,26 +141,19 @@ function fazerLoginCliente(event) {
 
     let form = event.target;
 
-    fetch(
-        "../routes/cliente.php?acao=login",
-        {
-            method: "POST",
-            body: new FormData(form)
-        }
-    )
+    fetch("../routes/cliente.php?acao=login", {
+        method: "POST",
+        body: new FormData(form)
+    })
         .then(function (resposta) {
             return resposta.json();
         })
         .then(function (dados) {
 
-            console.log(
-                "Resposta login cliente:",
-                dados
-            );
-
-            alert(dados.mensagem);
+            console.log("Resposta login cliente:", dados);
 
             if (!dados.sucesso) {
+                alert(dados.mensagem);
                 return;
             }
 
@@ -176,32 +162,20 @@ function fazerLoginCliente(event) {
 
             /* CLIENTE NOVO */
 
-            if (
-                Number(
-                    dados.cliente.perfil_completo
-                ) === 0
-            ) {
-                window.location.href =
-                    "criar-perfil-cli.html";
-
+            if (Number(dados.cliente.perfil_completo) === 0) {
+                window.location.href = "criar-perfil-cli.html";
                 return;
             }
 
             /* CLIENTE HABITUADO */
 
-            window.location.href =
-                "pesquisar.html";
+            window.location.href = "pesquisar.html";
         })
         .catch(function (erro) {
 
-            console.log(
-                "Erro no login do cliente:",
-                erro
-            );
+            console.log("Erro no login do cliente:", erro);
 
-            alert(
-                "Erro ao conectar com o servidor. Veja o Console (F12)."
-            );
+            alert("Erro ao conectar com o servidor. Veja o Console (F12).");
         });
 }
 
@@ -215,26 +189,19 @@ function fazerLoginProfissional(event) {
 
     let form = event.target;
 
-    fetch(
-        "../routes/profissional.php?acao=login",
-        {
-            method: "POST",
-            body: new FormData(form)
-        }
-    )
+    fetch("../routes/profissional.php?acao=login", {
+        method: "POST",
+        body: new FormData(form)
+    })
         .then(function (resposta) {
             return resposta.json();
         })
         .then(function (dados) {
 
-            console.log(
-                "Resposta login profissional:",
-                dados
-            );
-
-            alert(dados.mensagem);
+            console.log("Resposta login profissional:", dados);
 
             if (!dados.sucesso) {
+                alert(dados.mensagem);
                 return;
             }
 
@@ -243,32 +210,20 @@ function fazerLoginProfissional(event) {
 
             /* PROFISSIONAL NOVO */
 
-            if (
-                Number(
-                    dados.profissional.perfil_completo
-                ) === 0
-            ) {
-                window.location.href =
-                    "criar-perfil-pro.html";
-
+            if (Number(dados.profissional.perfil_completo) === 0) {
+                window.location.href = "criar-perfil-pro.html";
                 return;
             }
 
             /* PROFISSIONAL HABITUADO */
 
-            window.location.href =
-                "mensagens.html";
+            window.location.href = "mensagens.html";
         })
         .catch(function (erro) {
 
-            console.log(
-                "Erro no login profissional:",
-                erro
-            );
+            console.log("Erro no login profissional:", erro);
 
-            alert(
-                "Erro ao conectar com o servidor. Veja o Console (F12)."
-            );
+            alert("Erro ao conectar com o servidor. Veja o Console (F12).");
         });
 }
 
@@ -280,26 +235,61 @@ function fazerLoginProfissional(event) {
 function cadastrarCliente(event) {
     event.preventDefault();
 
-    let form = event.target;
+    const form = event.target;
 
-    fetch(
-        "../routes/cliente.php?acao=cadastrar",
-        {
-            method: "POST",
-            body: new FormData(form)
-        }
-    )
-        .then(function (resposta) {
-            return resposta.json();
+    /* LOCALIZAR CAMPO DE REGIÃO */
+
+    const campoRegiao = form.querySelector('[name="regiao"]');
+
+    if (!campoRegiao) {
+        console.error("Campo regiao não encontrado dentro do formulário.");
+
+        alert("Erro: campo de região não encontrado.");
+        return;
+    }
+
+    /* VALIDAR REGIÃO */
+
+    const regiao = campoRegiao.value.trim();
+
+    if (regiao === "") {
+        alert("Selecione sua região.");
+        campoRegiao.focus();
+        return;
+    }
+
+    /* MONTAR DADOS DO FORMULÁRIO */
+
+    const dadosFormulario = new FormData(form);
+
+    dadosFormulario.set("regiao", regiao);
+
+    console.log("REGIÃO SELECIONADA:", regiao);
+    console.log("DADOS ENVIADOS:", [...dadosFormulario.entries()]);
+
+    /* ENVIAR CADASTRO */
+
+    fetch("../routes/cliente.php?acao=cadastrar", {
+        method: "POST",
+        body: dadosFormulario
+    })
+        .then(async function (resposta) {
+
+            const texto = await resposta.text();
+
+            console.log("RESPOSTA DO PHP:", texto);
+
+            try {
+                return JSON.parse(texto);
+            } catch (erro) {
+                throw new Error(
+                    "O PHP não retornou um JSON válido. Confira o Console."
+                );
+            }
         })
         .then(function (dados) {
 
-            console.log(
-                "Resposta cadastro cliente:",
-                dados
-            );
-
-            alert(dados.mensagem);
+            console.log("Resposta cadastro cliente:", dados);
 
             if (dados.sucesso) {
 
@@ -307,23 +297,18 @@ function cadastrarCliente(event) {
 
                 fechar();
 
-                alert(
-                    "Conta criada! Agora faça login para continuar."
-                );
-
                 abrirLogin();
+
+            } else {
+
+                alert(dados.mensagem);
             }
         })
         .catch(function (erro) {
 
-            console.log(
-                "Erro no cadastro do cliente:",
-                erro
-            );
+            console.error("Erro no cadastro do cliente:", erro);
 
-            alert(
-                "Erro ao conectar com o servidor. Veja o Console (F12)."
-            );
+            alert("Erro ao conectar com o servidor. Veja o Console (F12).");
         });
 }
 
@@ -337,25 +322,17 @@ function cadastrarProfissional(event) {
 
     let form = event.target;
 
-    let servicos =
-        form.querySelectorAll(
-            'input[name="servicos[]"]:checked'
-        );
+    let servicos = form.querySelectorAll(
+        'input[name="servicos[]"]:checked'
+    );
 
     if (servicos.length === 0) {
-
-        alert(
-            "Selecione pelo menos um serviço."
-        );
-
+        alert("Selecione pelo menos um serviço.");
         return;
     }
 
-    let checkboxOutro =
-        document.getElementById("checkboxOutro");
-
-    let outroServico =
-        document.getElementById("outroServico");
+    let checkboxOutro = document.getElementById("checkboxOutro");
+    let outroServico = document.getElementById("outroServico");
 
     if (
         checkboxOutro &&
@@ -363,34 +340,38 @@ function cadastrarProfissional(event) {
         outroServico &&
         outroServico.value.trim() === ""
     ) {
-
-        alert(
-            "Digite qual é o outro serviço."
-        );
-
+        alert("Digite qual é o outro serviço.");
         outroServico.focus();
-
         return;
     }
 
-    fetch(
-        "../routes/profissional.php?acao=cadastrar",
-        {
-            method: "POST",
-            body: new FormData(form)
-        }
-    )
+    /* ========================================= */
+    /* VERIFICAR SERVIÇOS ENVIADOS               */
+    /* ========================================= */
+
+    let dadosFormulario = new FormData(form);
+
+    let servicosEnviados = dadosFormulario.getAll("servicos[]");
+
+    console.log(
+        "VALORES ENVIADOS:",
+        JSON.stringify(servicosEnviados)
+    );
+
+    /* ========================================= */
+    /* ENVIAR CADASTRO                           */
+    /* ========================================= */
+
+    fetch("../routes/profissional.php?acao=cadastrar", {
+        method: "POST",
+        body: dadosFormulario
+    })
         .then(function (resposta) {
             return resposta.json();
         })
         .then(function (dados) {
 
-            console.log(
-                "Resposta cadastro profissional:",
-                dados
-            );
-
-            alert(dados.mensagem);
+            console.log("Resposta cadastro profissional:", dados);
 
             if (dados.sucesso) {
 
@@ -400,25 +381,18 @@ function cadastrarProfissional(event) {
 
                 fechar();
 
-                /* igual ao cliente: avisa e abre o login */
-
-                alert(
-                    "Conta criada! Agora faça login para continuar."
-                );
-
                 abrirLogin();
+
+            } else {
+
+                alert(dados.mensagem);
             }
         })
         .catch(function (erro) {
 
-            console.log(
-                "Erro no cadastro profissional:",
-                erro
-            );
+            console.log("Erro no cadastro profissional:", erro);
 
-            alert(
-                "Erro ao conectar com o servidor. Veja o Console (F12)."
-            );
+            alert("Erro ao conectar com o servidor. Veja o Console (F12).");
         });
 }
 
@@ -431,16 +405,13 @@ document
     .querySelectorAll(".modal")
     .forEach(function (modal) {
 
-        modal.addEventListener(
-            "click",
-            function (event) {
+        modal.addEventListener("click", function (event) {
 
-                if (event.target === modal) {
-                    fechar();
-                }
-
+            if (event.target === modal) {
+                fechar();
             }
-        );
+
+        });
 
     });
 
@@ -460,52 +431,35 @@ document
 function verificarSessao() {
 
     fetch("../verificar_sessao.php")
-
         .then(function (resposta) {
             return resposta.json();
         })
-
         .then(function (dados) {
 
             if (dados.logado) {
 
-                let botao =
-                    document.getElementById(
-                        "btnUsuario"
-                    );
+                let botao = document.getElementById("btnUsuario");
 
                 if (botao) {
 
-                    botao.textContent =
-                        dados.nome;
+                    botao.textContent = dados.nome;
 
-                    botao.onclick =
-                        function () {
-                            abrirCliente();
-                        };
+                    botao.onclick = function () {
+                        abrirCliente();
+                    };
                 }
 
-                let nomePerfil =
-                    document.querySelector(
-                        ".perfil-info strong"
-                    );
+                let nomePerfil = document.querySelector(".perfil-info strong");
 
                 if (nomePerfil) {
-
-                    nomePerfil.textContent =
-                        dados.nome ||
-                        "Meu perfil";
+                    nomePerfil.textContent = dados.nome || "Meu perfil";
                 }
             }
 
         })
-
         .catch(function (erro) {
 
-            console.log(
-                "Erro ao verificar sessão:",
-                erro
-            );
+            console.log("Erro ao verificar sessão:", erro);
 
         });
 }
@@ -519,8 +473,7 @@ function abrirSobre() {
 
     fechar();
 
-    let sobre =
-        document.getElementById("sobre");
+    let sobre = document.getElementById("sobre");
 
     if (sobre) {
         sobre.classList.add("ativo");
@@ -536,8 +489,7 @@ function abrirSeguranca() {
 
     fechar();
 
-    let seguranca =
-        document.getElementById("seguranca");
+    let seguranca = document.getElementById("seguranca");
 
     if (seguranca) {
         seguranca.classList.add("ativo");
@@ -551,10 +503,7 @@ function abrirSeguranca() {
 
 function abrirMenuPerfil() {
 
-    const menu =
-        document.getElementById(
-            "menuPerfil"
-        );
+    const menu = document.getElementById("menuPerfil");
 
     if (!menu) {
         return;
@@ -575,19 +524,13 @@ function editarPerfil(event) {
         event.stopPropagation();
     }
 
-    const menu =
-        document.getElementById(
-            "menuPerfil"
-        );
+    const menu = document.getElementById("menuPerfil");
 
     if (menu) {
         menu.classList.remove("ativo");
     }
 
-    const modal =
-        document.getElementById(
-            "modalEditarPerfil"
-        );
+    const modal = document.getElementById("modalEditarPerfil");
 
     if (modal) {
         modal.classList.add("ativo");
@@ -601,10 +544,7 @@ function editarPerfil(event) {
 
 function fecharEditarPerfil() {
 
-    const modal =
-        document.getElementById(
-            "modalEditarPerfil"
-        );
+    const modal = document.getElementById("modalEditarPerfil");
 
     if (modal) {
         modal.classList.remove("ativo");
@@ -616,33 +556,22 @@ function fecharEditarPerfil() {
 /* FORMULÁRIO EDITAR PERFIL                  */
 /* ========================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-        const formulario =
-            document.getElementById(
-                "formEditarPerfil"
-            );
+    const formulario = document.getElementById("formEditarPerfil");
 
-        if (formulario) {
+    if (formulario) {
 
-            formulario.addEventListener(
-                "submit",
-                function (event) {
+        formulario.addEventListener("submit", function (event) {
 
-                    event.preventDefault();
+            event.preventDefault();
 
-                    alert(
-                        "Alterações salvas com sucesso!"
-                    );
+            alert("Alterações salvas com sucesso!");
 
-                    fecharEditarPerfil();
-                }
-            );
-        }
+            fecharEditarPerfil();
+        });
     }
-);
+});
 
 
 /* ========================================= */
@@ -651,16 +580,13 @@ document.addEventListener(
 
 function sairConta() {
 
-    const menu =
-        document.getElementById(
-            "menuPerfil"
-        );
+    const menu = document.getElementById("menuPerfil");
 
     if (menu) {
         menu.classList.remove("ativo");
     }
 
-    /* encerra a sessão (cliente e profissional) e volta ao início */
+    /* Encerra a sessão e volta ao início */
 
     Promise.all([
         fetch("../routes/cliente.php?acao=sair"),
@@ -677,149 +603,85 @@ function sairConta() {
 /* FECHAR MENU DO PERFIL AO CLICAR FORA      */
 /* ========================================= */
 
-document.addEventListener(
-    "click",
-    function (evento) {
+document.addEventListener("click", function (evento) {
 
-        const menuPerfil =
-            document.getElementById(
-                "menuPerfil"
-            );
+    const menuPerfil = document.getElementById("menuPerfil");
+    const botaoPerfil = document.querySelector(".btn-perfil");
 
-        const botaoPerfil =
-            document.querySelector(
-                ".btn-perfil"
-            );
-
-        if (
-            !menuPerfil ||
-            !botaoPerfil
-        ) {
-            return;
-        }
-
-        if (
-            !menuPerfil.contains(
-                evento.target
-            ) &&
-            !botaoPerfil.contains(
-                evento.target
-            )
-        ) {
-
-            menuPerfil.classList.remove(
-                "ativo"
-            );
-        }
+    if (!menuPerfil || !botaoPerfil) {
+        return;
     }
-);
+
+    if (
+        !menuPerfil.contains(evento.target) &&
+        !botaoPerfil.contains(evento.target)
+    ) {
+
+        menuPerfil.classList.remove("ativo");
+    }
+});
 
 
 /* ========================================= */
 /* FOTO - EDITAR PERFIL                      */
 /* ========================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-        const inputFoto =
-            document.getElementById(
-                "fotoBalao"
-            );
+    const inputFoto = document.getElementById("fotoBalao");
+    const previaFoto = document.getElementById("previaFotoPerfil");
+    const removerFoto = document.getElementById("removerFotoPerfil");
 
-        const previaFoto =
-            document.getElementById(
-                "previaFotoPerfil"
-            );
+    if (!inputFoto || !previaFoto) {
+        return;
+    }
 
-        const removerFoto =
-            document.getElementById(
-                "removerFotoPerfil"
-            );
+    /* ESCOLHER FOTO */
 
-        if (
-            !inputFoto ||
-            !previaFoto
-        ) {
+    inputFoto.addEventListener("change", function () {
+
+        const arquivo = inputFoto.files[0];
+
+        if (!arquivo) {
             return;
         }
 
+        if (!arquivo.type.startsWith("image/")) {
 
-        /* ESCOLHER FOTO */
+            alert("Escolha uma imagem válida.");
 
-        inputFoto.addEventListener(
-            "change",
-            function () {
+            inputFoto.value = "";
 
-                const arquivo =
-                    inputFoto.files[0];
-
-                if (!arquivo) {
-                    return;
-                }
-
-                if (
-                    !arquivo.type.startsWith(
-                        "image/"
-                    )
-                ) {
-
-                    alert(
-                        "Escolha uma imagem válida."
-                    );
-
-                    inputFoto.value = "";
-
-                    return;
-                }
-
-                const leitor =
-                    new FileReader();
-
-                leitor.onload =
-                    function (evento) {
-
-                        previaFoto.innerHTML =
-                            "";
-
-                        const imagem =
-                            document.createElement(
-                                "img"
-                            );
-
-                        imagem.src =
-                            evento.target.result;
-
-                        imagem.alt =
-                            "Foto do perfil";
-
-                        previaFoto.appendChild(
-                            imagem
-                        );
-                    };
-
-                leitor.readAsDataURL(
-                    arquivo
-                );
-            }
-        );
-
-
-        /* REMOVER FOTO */
-
-        if (removerFoto) {
-
-            removerFoto.addEventListener(
-                "click",
-                function () {
-
-                    inputFoto.value = "";
-
-                    previaFoto.innerHTML =
-                        "👤";
-                }
-            );
+            return;
         }
+
+        const leitor = new FileReader();
+
+        leitor.onload = function (evento) {
+
+            previaFoto.innerHTML = "";
+
+            const imagem = document.createElement("img");
+
+            imagem.src = evento.target.result;
+            imagem.alt = "Foto do perfil";
+
+            previaFoto.appendChild(imagem);
+        };
+
+        leitor.readAsDataURL(arquivo);
+    });
+
+
+    /* REMOVER FOTO */
+
+    if (removerFoto) {
+
+        removerFoto.addEventListener("click", function () {
+
+            inputFoto.value = "";
+
+            previaFoto.innerHTML = "👤";
+        });
     }
-);
+});

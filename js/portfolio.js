@@ -167,9 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
             }
 
-            alert(resultado.mensagem || "Portfólio salvo com sucesso!");
-
-            window.location.reload();
+            window.location.href = "mensagens.html";
 
         } catch (erroEnvio) {
             mostrarErro(erroEnvio.message);
