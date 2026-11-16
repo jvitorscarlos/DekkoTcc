@@ -58,41 +58,86 @@ function carregarPerfil() {
                 avatarHTML = `<span>${inicial}</span>`;
             }
 
-            // REDE SOCIAL
+            // REDE SOCIAL - INSTAGRAM CLICÁVEL
             let redeSocialHTML = "";
 
-            if (profissional.rede_social &&
-                profissional.rede_social.trim() !== "") {
+            if (
+                profissional.rede_social &&
+                profissional.rede_social.trim() !== ""
+            ) {
+                let instagram = profissional.rede_social.trim();
 
-                redeSocialHTML = `
-                    <div class="perfil-social" style="
-                        display: block;
-                        width: 100%;
-                        box-sizing: border-box;
-                        margin: 24px 0;
-                        padding: 18px 22px;
-                        background: #fff8e5;
-                        border: 1px solid #f0c64b;
-                        border-radius: 14px;
-                        color: #222;
-                    ">
-                        <strong style="
-                            display: block;
-                            margin-bottom: 8px;
-                            font-size: 15px;
-                            color: #8a6500;
-                        ">📱 Instagram</strong>
+                // Aceitar @usuario
+                if (instagram.startsWith("@")) {
+                    instagram = instagram.substring(1);
+                }
 
-                        <p style="
-                            display: block;
-                            margin: 0;
-                            font-size: 17px;
-                            font-weight: 600;
-                            color: #222;
-                            overflow-wrap: anywhere;
-                        ">${profissional.rede_social}</p>
-                    </div>
-                `;
+                let linkInstagram = "";
+
+                if (/^https?:\/\//i.test(instagram)) {
+                    linkInstagram = instagram;
+                } else {
+                    instagram = instagram.replace(/^www\./i, "");
+
+                    if (instagram.startsWith("instagram.com/")) {
+                        linkInstagram = "https://" + instagram;
+                    } else if (/^[a-zA-Z0-9._]+$/.test(instagram)) {
+                        linkInstagram = "https://www.instagram.com/" + instagram + "/";
+                    }
+                }
+
+                try {
+                    const urlInstagram = new URL(linkInstagram);
+
+                    const dominioValido =
+                        urlInstagram.protocol === "https:" &&
+                        (
+                            urlInstagram.hostname === "www.instagram.com" ||
+                            urlInstagram.hostname === "instagram.com"
+                        );
+
+                    if (dominioValido) {
+                        redeSocialHTML = `
+                            <div class="perfil-social" style="
+                                display: block;
+                                width: 100%;
+                                box-sizing: border-box;
+                                margin: 24px 0;
+                                padding: 18px 22px;
+                                background: #fff8e5;
+                                border: 1px solid #f0c64b;
+                                border-radius: 14px;
+                                color: #222;
+                            ">
+                                <strong style="
+                                    display: block;
+                                    margin-bottom: 8px;
+                                    font-size: 15px;
+                                    color: #8a6500;
+                                ">📱 Instagram</strong>
+
+                                <a
+                                    href="${urlInstagram.href}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style="
+                                        display: inline-block;
+                                        font-size: 17px;
+                                        font-weight: 600;
+                                        color: #222;
+                                        overflow-wrap: anywhere;
+                                        text-decoration: underline;
+                                        cursor: pointer;
+                                    "
+                                >
+                                    ${profissional.rede_social}
+                                </a>
+                            </div>
+                        `;
+                    }
+                } catch (erro) {
+                    console.log("Instagram inválido:", erro);
+                }
             }
 
             // BUSCAR PORTFÓLIO
@@ -105,8 +150,10 @@ function carregarPerfil() {
 
                     let fotosPortfolio = [];
 
-                    if (dadosPortfolio.sucesso &&
-                        Array.isArray(dadosPortfolio.fotos)) {
+                    if (
+                        dadosPortfolio.sucesso &&
+                        Array.isArray(dadosPortfolio.fotos)
+                    ) {
                         fotosPortfolio = dadosPortfolio.fotos;
                     }
 

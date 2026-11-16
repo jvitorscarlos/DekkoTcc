@@ -131,7 +131,7 @@ form.addEventListener("submit", async function (event) {
             return;
         }
 
-        alert("Perfil atualizado com sucesso!");
+       
 
         window.location.href = paginaMensagens;
 

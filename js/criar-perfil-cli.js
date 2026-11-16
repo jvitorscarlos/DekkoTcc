@@ -170,7 +170,7 @@ function enviarPerfil(dados) {
         })
         .then(function (resposta) {
 
-            alert(resposta.mensagem);
+            
 
             if (resposta.sucesso) {
                 window.location.href = modoEditar

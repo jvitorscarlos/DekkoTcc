@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
 
-            alert(resultado.mensagem || "Portfólio atualizado com sucesso!");
+            
 
             fotos.forEach(foto => {
                 if (foto?.previewUrl) {

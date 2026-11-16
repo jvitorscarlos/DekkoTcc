@@ -3511,3 +3511,7 @@ html {
         transform: translateY(0);
     }
 }
+.logo {
+    text-decoration: none;
+    color: inherit;
+}

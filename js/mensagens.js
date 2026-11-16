@@ -1,4 +1,3 @@
-
 (function () {
     let conversaAtual = null;
     let idProfissionalAtual = null;
@@ -8,6 +7,7 @@
     let confirmacoesAtuais = [];
     let intervaloConversas = null;
     let statusConversaAtual = null;
+    let assinaturaConfirmacoes = null;
 
     const INTERVALO_ATUALIZACAO = 3000;
     const FOTO_PADRAO = "../img/sem-foto.jpg";
@@ -363,6 +363,7 @@
 
         if (mudouConversa) {
             assinaturaMensagens = null;
+            assinaturaConfirmacoes = null;
             confirmacoesAtuais = [];
         }
 
@@ -814,11 +815,10 @@
         })
             .then(r => r.json())
             .then(resp => {
-                alert(resp.mensagem || "Resposta recebida.");
-
                 if (resp.sucesso) {
                     carregarConfirmacoes(conversaAtual);
                 } else {
+                    alert(resp.mensagem || "Não foi possível solicitar a confirmação.");
                     atualizarBotaoSolicitacao();
                 }
             })
@@ -832,12 +832,6 @@
     function responderConfirmacao(resposta) {
         if (!conversaAtual || tipoUsuario !== "cliente") return;
 
-        const confirmar = resposta === "ACEITA"
-            ? "Confirma que o serviço foi realizado?"
-            : "Tem certeza de que deseja recusar este pedido?";
-
-        if (!window.confirm(confirmar)) return;
-
         const dados = new FormData();
         dados.append("id_conversa", conversaAtual);
         dados.append("resposta", resposta);
@@ -848,9 +842,10 @@
         })
             .then(r => r.json())
             .then(resp => {
-                alert(resp.mensagem || "Resposta recebida.");
-
-                if (!resp.sucesso) return;
+                if (!resp.sucesso) {
+                    alert(resp.mensagem || "Não foi possível registrar sua resposta.");
+                    return;
+                }
 
                 if (resposta === "ACEITA") {
                     statusConversaAtual = "ENCERRADA";
@@ -870,12 +865,6 @@
     function decidirRecusa(decisao) {
         if (!conversaAtual || tipoUsuario !== "cliente") return;
 
-        const mensagem = decisao === "ENCERRAR"
-            ? "Deseja realmente encerrar esta conversa?"
-            : "Deseja continuar conversando?";
-
-        if (!window.confirm(mensagem)) return;
-
         const dados = new FormData();
         dados.append("id_conversa", conversaAtual);
         dados.append("decisao", decisao);
@@ -890,8 +879,6 @@
                     alert(resp.mensagem || "Não foi possível registrar sua decisão.");
                     return;
                 }
-
-                alert(resp.mensagem || "Decisão registrada.");
 
                 if (decisao === "ENCERRAR") {
                     statusConversaAtual = "ENCERRADA";
@@ -910,6 +897,20 @@
     function renderizarMensagens(mensagens) {
         const area = document.querySelector(".mensagens-chat");
         if (!area) return;
+
+        const assinaturaAtual = JSON.stringify({
+            confirmacoes: confirmacoesAtuais,
+            status: statusConversaAtual
+        });
+
+        if (
+            assinaturaAtual === assinaturaConfirmacoes &&
+            area.querySelector(".cartao-confirmacao")
+        ) {
+            return;
+        }
+
+        assinaturaConfirmacoes = assinaturaAtual;
 
         area.innerHTML = "";
 
@@ -1011,7 +1012,6 @@
 
     function enviarMensagem() {
         if (!conversaAtual) {
-            alert("Selecione uma conversa primeiro.");
             return;
         }
 
@@ -1037,7 +1037,7 @@
             .then(r => r.json())
             .then(resp => {
                 if (!resp.sucesso) {
-                    alert(resp.mensagem);
+                    alert(resp.mensagem || "Não foi possível enviar a mensagem.");
                     return;
                 }
 
